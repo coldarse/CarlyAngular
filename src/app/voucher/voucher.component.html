@@ -1,0 +1,102 @@
+<div [@routerTransition]>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6">
+            <h1>{{ "Voucher" | localize }}</h1>
+          </div>
+          <div class="col-6 text-right">
+            <a href="javascript:;"
+              class="btn bg-blue"
+              (click)="createVoucher()">
+              <i class="fa fa-plus-square"></i>
+              {{ "Create" | localize }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered"
+                [busy]="isTableLoading">
+                <thead class="bg-light">
+                  <tr>
+                    <th>{{ "VoucherName" | localize }}</th>
+                    <th>{{ "VoucherCode" | localize }}</th>
+                    <th>{{ "VoucherMinAmount" | localize }}</th>
+                    <th>{{ "VoucherDesc" | localize }}</th>
+                    <th>{{ "VoucherStartDate" | localize }}</th>
+                    <th>{{ "VoucherEndDate" | localize }}</th>
+                    <th>{{ "VoucherLimit" | localize }}</th>
+                    <th>{{ "VoucherType" | localize }}</th>
+                    <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="
+                    let voucher of vouchers
+                      | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: pageSize,
+                            currentPage: pageNumber,
+                            totalItems: totalItems
+                          }
+                  ">
+                    <td>{{ voucher.name }}</td>
+                    <td>{{ voucher.code }}</td>
+                    <td>{{ voucher.minAmount }}</td>
+                    <td>{{ voucher.description }}</td>
+                    <td>{{ voucher.startDate | date:'shortDate' }}</td>
+                    <td>{{ voucher.stopDate | date:'shortDate' }}</td>
+                    <td>{{ voucher.limit }}</td>
+                    <td>{{ voucher.type }}</td>
+                    <td>
+                      <button type="button"
+                        class="btn btn-sm bg-secondary"
+                        (click)="editVoucher(voucher)">
+                        <i class="fas fa-pencil-alt"></i>
+                        {{ "Edit" | localize }}
+                      </button>
+                      <button type="button"
+                        class="btn btn-sm bg-danger mx-2"
+                        (click)="delete(voucher)">
+                        <i class="fas fa-trash"></i>
+                        {{ "Delete" | localize }}
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer table-card-footer bg-light border-top">
+            <div class="row">
+              <div class="col-sm-4 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary"
+                  (click)="refresh()">
+                  <i class="fas fa-redo-alt"></i>
+                </button>
+              </div>
+              <div class="col-sm-4 col-12 text-center">
+                <p class="mb-0 my-2">
+                  {{ "TotalRecordsCount" | localize: totalItems }}
+                </p>
+              </div>
+              <div class="col-sm-4 col-12">
+                <div class="float-sm-right m-auto">
+                  <abp-pagination-controls id="server"
+                    (pageChange)="getDataPage($event)">
+                  </abp-pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

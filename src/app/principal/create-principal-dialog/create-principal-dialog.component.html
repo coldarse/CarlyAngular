@@ -1,0 +1,70 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  [formGroup] ="principalForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'CreateNewPrincipal' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="name">
+        {{ "PrincipalName" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          minlength="2"
+          maxlength="64"
+          required
+          formControlName="name"
+        />
+      </div>
+    </div>
+    <div formArrayName="addOns">
+        <div 
+            *ngFor="let addon of principalForm.controls.addOns['controls']; 
+                    let i=index">
+            <div [formGroupName]="i">
+                <div class="form-group row required" >
+                    <label class="col-md-3 col-form-label" for="addonname">
+                        {{ "AddOn" | localize }} {{i + 1}}
+                      </label>
+                      <div class="col-md-7">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="addonname"
+                          id="addonname"
+                          minlength="2"
+                          maxlength="64"
+                          required
+                          formControlName="addonname"
+                        />
+                      </div>
+                      <div class="col-md-2 btn btn-danger">
+                          <a (click)="removeAddOn(i)" style="cursor: pointer">
+                              Remove
+                          </a>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn btn-info" [hidden]="addoncount >= 4">
+        <a (click)="addAddOn()" style="cursor: pointer">
+            + Add On
+        </a>
+    </div>
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!principalForm.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>
