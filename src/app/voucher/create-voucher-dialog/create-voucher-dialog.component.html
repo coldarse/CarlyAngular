@@ -1,0 +1,100 @@
+<form
+    class="form-horizontal"
+    autocomplete="off"
+    [formGroup]="voucherForm"
+    (ngSubmit)="save()"
+>
+    <abp-modal-header
+        [title]="'CreateNewVoucher' | localize"
+        (onCloseClick)="bsModalRef.hide()"
+    ></abp-modal-header>
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="name">
+              {{ "VoucherName" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                minlength="2"
+                maxlength="64"
+                required
+                formControlName="name"
+              />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="code">
+              {{ "VoucherCode" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="code"
+                id="code"
+                minlength="1"
+                maxlength="4"
+                required
+                formControlName="code"
+              />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="minimum">
+              {{ "VoucherMinimum" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="minimum"
+                id="minimum"
+                minlength="1"
+                maxlength="64"
+                required
+                formControlName="minimum"
+              />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="desc">
+              {{ "VoucherDesc" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="desc"
+                id="desc"
+                minlength="1"
+                maxlength="128"
+                required
+                formControlName="desc"
+              />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="startDate">
+              {{ "VoucherStartDate" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input
+                
+                class="form-control"
+                name="startDate"
+                formControlName="startDate"
+                ngbDatepicker
+              />
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!voucherForm.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+     ></abp-modal-footer>
+</form>

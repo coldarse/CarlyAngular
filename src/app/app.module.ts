@@ -43,6 +43,9 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { AddOnServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreatePrincipalDialogComponent } from './principal/create-principal-dialog/create-principal-dialog.component';
 import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/edit-principal-dialog.component';
+import { CreateVoucherDialogComponent } from './voucher/create-voucher-dialog/create-voucher-dialog.component';
+import { EditVoucherDialogComponent } from './voucher/edit-voucher-dialog/edit-voucher-dialog.component';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,9 @@ import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/
     PrincipalComponent,
     VoucherComponent,
     CreatePrincipalDialogComponent,
-    EditPrincipalDialogComponent
+    EditPrincipalDialogComponent,
+    CreateVoucherDialogComponent,
+    EditVoucherDialogComponent
   ],
   imports: [
     CommonModule,
@@ -92,6 +97,8 @@ import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    NgbDatepickerModule,
+
   ],
   providers: [
     PrincipalServiceProxy,

@@ -5,6 +5,7 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
 import { PrincipalDtoPagedResultDto, VoucherDto, VoucherDtoPagedResultDto, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
+import { CreateVoucherDialogComponent } from './create-voucher-dialog/create-voucher-dialog.component';
 
 
 class PagedVouchersRequestDto extends PagedRequestDto{
@@ -82,14 +83,14 @@ export class VoucherComponent extends PagedListingComponentBase<VoucherDto> {
 
   showCreateOrEditVoucherDialog(id?: number): void {
     let createOrEditVouchertDialog: BsModalRef;
-    // if (!id) {
-    //   createOrEditVouchertDialog = this._modalService.show(
-    //     CreatePrincipalDialogComponent,
-    //     {
-    //       class: 'modal-lg',
-    //     }
-    //   );
-    // }
+    if (!id) {
+      createOrEditVouchertDialog = this._modalService.show(
+        CreateVoucherDialogComponent,
+        {
+          class: 'modal-lg',
+        }
+      );
+    }
     // else {
     //   createOrEditVouchertDialog = this._modalService.show(
     //     EditPrincipalDialogComponent,
