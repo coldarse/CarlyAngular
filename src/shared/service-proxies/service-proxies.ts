@@ -621,6 +621,67 @@ export class PrincipalServiceProxy {
 
     /**
      * @param id (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    updatePrincipal(id: number | undefined, body: PrincipalDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Principal/UpdatePrincipal?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdatePrincipal(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdatePrincipal(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdatePrincipal(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<PrincipalDto> {
@@ -5111,7 +5172,7 @@ export class VoucherDto implements IVoucherDto {
     stopDate: moment.Moment;
     limit: number;
     discountAmount: number;
-    gift: AddOn;
+    giftId: number;
     id: number;
 
     constructor(data?: IVoucherDto) {
@@ -5134,7 +5195,7 @@ export class VoucherDto implements IVoucherDto {
             this.stopDate = _data["stopDate"] ? moment(_data["stopDate"].toString()) : <any>undefined;
             this.limit = _data["limit"];
             this.discountAmount = _data["discountAmount"];
-            this.gift = _data["gift"] ? AddOn.fromJS(_data["gift"]) : <any>undefined;
+            this.giftId = _data["giftId"];
             this.id = _data["id"];
         }
     }
@@ -5157,7 +5218,7 @@ export class VoucherDto implements IVoucherDto {
         data["stopDate"] = this.stopDate ? this.stopDate.toISOString() : <any>undefined;
         data["limit"] = this.limit;
         data["discountAmount"] = this.discountAmount;
-        data["gift"] = this.gift ? this.gift.toJSON() : <any>undefined;
+        data["giftId"] = this.giftId;
         data["id"] = this.id;
         return data; 
     }
@@ -5180,7 +5241,7 @@ export interface IVoucherDto {
     stopDate: moment.Moment;
     limit: number;
     discountAmount: number;
-    gift: AddOn;
+    giftId: number;
     id: number;
 }
 

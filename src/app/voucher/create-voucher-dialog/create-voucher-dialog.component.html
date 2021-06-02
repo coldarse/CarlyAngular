@@ -83,14 +83,136 @@
             </label>
             <div class="col-md-9">
                 <input
-                
+                #datepicker1="ngbDatepicker"
                 class="form-control"
                 name="startDate"
+                id="startDate"
                 formControlName="startDate"
                 ngbDatepicker
+                (click)="datepicker1.toggle()"
+                (dateSelect)="onDateSelect1($event)"
               />
-            </div>
+          </div>
         </div>
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="endDate">
+            {{ "VoucherEndDate" | localize }}
+          </label>
+          <div class="col-md-9">
+              <input
+              #datepicker2="ngbDatepicker"
+              class="form-control"
+              name="endDate"
+              id="endDate"
+              formControlName="endDate"
+              ngbDatepicker
+              (click)="datepicker2.toggle()"
+              (dateSelect)="onDateSelect2($event)"
+            />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="enable">
+          {{ "VoucherEnabled" | localize }}
+        </label>
+        <div class="col-md-9">
+            <input
+            type="checkbox"
+            name="enable"
+            id="enable"
+            required
+            formControlName="enable"
+          />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="limit">
+          {{ "VoucherLimit" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="limit"
+            id="limit"
+            minlength="1"
+            maxlength="128"
+            required
+            formControlName="limit"
+          />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="type">
+          {{ "VoucherType" | localize }}
+        </label>
+        <div class="col-md-9">
+          <select
+            class="form-control" 
+            name="type" 
+            id="type"
+            required
+            formControlName="type"
+            (change)="voucherType($event)" 
+            >
+            <option value="0">{{ "PleaseSelectOne" | localize }}</option>
+            <option value="discount">{{ "AmountDiscount" | localize }}</option>
+            <option value="gift">{{ "FreeGift" | localize }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row required" [hidden]="xFreeGift">
+        <label class="col-md-3 col-form-label" for="discountAmount">
+          {{ "VoucherDiscountAmount" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="discountAmount"
+            id="discountAmount"
+            minlength="1"
+            maxlength="128"
+            required
+            formControlName="discountAmount"
+          />
+        </div>
+      </div>
+      <div class="form-group row required" [hidden]="xDiscount">
+        <label class="col-md-3 col-form-label" for="principal">
+          {{ "VoucherPrincipal" | localize }}
+        </label>
+        <div class="col-md-9">
+          <select
+            class="form-control" 
+            name="principal" 
+            id="principal"
+            required
+            formControlName="principal" 
+            (change)="selectedPrincipal($event)"
+            >
+            <option value="0">{{ "PleaseSelectOne" | localize }}</option>
+            <option value="{{prin.id}}" *ngFor="let prin of principal">{{ prin.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row required" [hidden]="xDiscount">
+        <label class="col-md-3 col-form-label" for="addon">
+          {{ "VoucherAddOn" | localize }}
+        </label>
+        <div class="col-md-9">
+          <select
+            class="form-control" 
+            name="addon" 
+            id="addon"
+            required
+            formControlName="addon" 
+            >
+            <option value="0">{{ "PleaseSelectOne" | localize }}</option>
+            <option value="{{add.id}}" *ngFor="let add of addon">{{ add.addonname }}</option>
+          </select>
+        </div>
+      </div>
     </div>
     <abp-modal-footer
     [cancelDisabled]="saving"

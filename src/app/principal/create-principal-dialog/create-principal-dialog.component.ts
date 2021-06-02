@@ -73,7 +73,7 @@ export class CreatePrincipalDialogComponent extends AppComponentBase
         addon.addonname = element.addonname;
         addon.desc = element.desc;
         addon.price = element.price;
-
+ 
         this.principal.addOns.push(addon);
       });
 
