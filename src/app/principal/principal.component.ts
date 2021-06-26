@@ -13,11 +13,8 @@ class PagedPrincipalsRequestDto extends PagedRequestDto{
 }
 
 @Component({
-  selector: 'app-principal',
   templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css'],
-  animations: [appModuleAnimation()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [appModuleAnimation()]
 })
 export class PrincipalComponent extends PagedListingComponentBase<PrincipalDto> {
 
@@ -32,7 +29,7 @@ export class PrincipalComponent extends PagedListingComponentBase<PrincipalDto> 
     super(injector);
   }
 
-  list(
+  protected list(
     request: PagedPrincipalsRequestDto, 
     pageNumber: number, 
     finishedCallback: Function
@@ -40,7 +37,11 @@ export class PrincipalComponent extends PagedListingComponentBase<PrincipalDto> 
     request.keyword = this.keyword;
 
     this._principalsService
-      .getAll(request.keyword, request.skipCount, request.maxResultCount)
+      .getAll(
+        request.keyword, 
+        request.skipCount, 
+        request.maxResultCount
+      )
       .pipe(
         finalize(() => {
           finishedCallback();
@@ -48,12 +49,12 @@ export class PrincipalComponent extends PagedListingComponentBase<PrincipalDto> 
       )
       .subscribe((result: PrincipalDtoPagedResultDto) => {
         this.principals = result.items;
-        this.showPaging(result, pageNumber)
+        this.showPaging(result, pageNumber);
       });
   }
 
 
-  delete(principal: PrincipalDto): void {
+  protected delete(principal: PrincipalDto): void {
     abp.message.confirm(
       this.l('PrincipalDeleteWarningMessage', principal.name),
       undefined,

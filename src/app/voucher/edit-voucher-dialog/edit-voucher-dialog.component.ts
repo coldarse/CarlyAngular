@@ -47,31 +47,35 @@ export class EditVoucherDialogComponent extends AppComponentBase
   }
 
   ngOnInit(): void {
-    console.log(this.id);
 
     this._voucherService
       .get(this.id)
       .subscribe((result: any) => {
-        console.log(result);
         this.voucher = result;
+
+        let year1 = new Date(this.voucher.startDate.toDate()).getFullYear();
+        let year2 = new Date(this.voucher.stopDate.toDate()).getFullYear();
+        let month1 = new Date(this.voucher.startDate.toDate()).getMonth() + 1;
+        let month2 = new Date(this.voucher.stopDate.toDate()).getMonth() + 1;
+        let day1 = new Date(this.voucher.startDate.toDate()).getDate();
+        let day2 = new Date(this.voucher.stopDate.toDate()).getDate();
+
+        let tempStartDate = {year: year1, month: month1, day: day1};
+        let tempStopDate = {year: year2, month: month2, day: day2};
      
         if(this.voucher.giftId == 0){
 
-          if(this.voucher.type  == 'gift'){
-            this.xFreeGift = true;
-            this.xDiscount = false;
-          }else{
-            this.xFreeGift = false;
-            this.xDiscount = true;
-          }
+          this.xFreeGift = false;
+          this.xDiscount = true;
           
+
           this.voucherForm = this._fb.group({
             name: [this.voucher.name, Validators.required],
             code: [this.voucher.code, Validators.required],
             minimum: [this.voucher.minAmount, Validators.required],
             desc: [this.voucher.description],
-            startDate: [this.voucher.startDate, Validators.required],
-            endDate: [this.voucher.stopDate, Validators.required],
+            startDate: [tempStartDate, Validators.required],
+            endDate: [tempStopDate, Validators.required],
             enable: [true],
             limit: [this.voucher.limit],
             type: [this.voucher.type],
@@ -92,8 +96,6 @@ export class EditVoucherDialogComponent extends AppComponentBase
           .subscribe((result: AddOnDto) =>{
             this.editAddOn = result;
 
-            console.log(this.editAddOn);
-
             this._principalService
               .get(this.editAddOn.principalId)
               .pipe(
@@ -104,33 +106,35 @@ export class EditVoucherDialogComponent extends AppComponentBase
               .subscribe((result: Principal) =>{
                 this.editPrincipal = result;
 
-                console.log(this.voucher.type);
+                this._principalService
+                  .getPrincipal(this.editPrincipal.id)
+                  .pipe(
+                    finalize(() => {
+                    })
+                  )
+                  .subscribe((result: Principal) => {
+                    this.addon = result.addOns;
 
-                if(this.voucher.type  == 'gift'){
-                  this.xFreeGift = true;
-                  this.xDiscount = false;
-                }else{
-                  this.xFreeGift = false;
-                  this.xDiscount = true;
-                }
+                    this.xFreeGift = true;
+                    this.xDiscount = false;
 
-                this.voucherForm = this._fb.group({
-                  name: [this.voucher.name, Validators.required],
-                  code: [this.voucher.code, Validators.required],
-                  minimum: [this.voucher.minAmount, Validators.required],
-                  desc: [this.voucher.description],
-                  startDate: [this.voucher.startDate, Validators.required],
-                  endDate: [this.voucher.stopDate, Validators.required],
-                  enable: [true],
-                  limit: [this.voucher.limit],
-                  type: [this.voucher.type],
-                  discountAmount: [this.voucher.discountAmount],
-                  principal: [this.editPrincipal.id],
-                  addon: [this.editAddOn.id],
-                });
+                    this.voucherForm = this._fb.group({
+                      name: [this.voucher.name, Validators.required],
+                      code: [this.voucher.code, Validators.required],
+                      minimum: [this.voucher.minAmount, Validators.required],
+                      desc: [this.voucher.description],
+                      startDate: [tempStartDate, Validators.required],
+                      endDate: [tempStopDate, Validators.required],
+                      enable: [true],
+                      limit: [this.voucher.limit],
+                      type: [this.voucher.type],
+                      discountAmount: [this.voucher.discountAmount],
+                      principal: [this.editPrincipal.id],
+                      addon: [this.editAddOn.id],
+                    });
 
-                this.editVoucherVisible = true;
-                
+                    this.editVoucherVisible = true;
+                  });
               });
 
           });
@@ -155,19 +159,41 @@ export class EditVoucherDialogComponent extends AppComponentBase
   }
 
   onDateSelect1(event) {
+    let timeString = '00:00:00';
     let year = event.year;
     let month = event.month <= 9 ? '0' + event.month : event.month;;
     let day = event.day <= 9 ? '0' + event.day : event.day;;
-    let finalDate = year + "/" + month + "/" + day;
-    this.vStartDate = new Date(finalDate);
+    let finalDate = year + "-" + month + "-" + day;
+    this.vStartDate = new Date(finalDate + ' ' + timeString);
+    console.log(year);
+    console.log(month);
+    console.log(day);
+    console.log(new Date(finalDate + ' ' + timeString));
   }
 
   onDateSelect2(event) {
+    let timeString = '00:00:00';
     let year = event.year;
     let month = event.month <= 9 ? '0' + event.month : event.month;;
     let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+    this.vEndDate = new Date(finalDate + ' ' + timeString);
+    console.log(year);
+    console.log(month);
+    console.log(day);
+    console.log(new Date(finalDate + ' ' + timeString));
+  }
+
+  setDateFromDatePicker(datepickerdate){
+    let year = datepickerdate.year;
+    let month = datepickerdate.month <= 9 ? '0' + datepickerdate.month : datepickerdate.month;;
+    let day = datepickerdate.day <= 9 ? '0' + datepickerdate.day : datepickerdate.day;;
     let finalDate = year + "/" + month + "/" + day;
-    this.vEndDate = new Date(finalDate);
+    console.log(year);
+    console.log(month);
+    console.log(day);
+    
+    return new Date(finalDate);
   }
 
   voucherType(event: any){
@@ -202,6 +228,15 @@ export class EditVoucherDialogComponent extends AppComponentBase
     try{
       this.saving = true;
 
+      if(this.vStartDate == undefined){
+        this.vStartDate = this.setDateFromDatePicker(this.voucherForm.controls.startDate.value);
+      }
+
+      if(this.vEndDate == undefined){
+        this.vEndDate = this.setDateFromDatePicker(this.voucherForm.controls.endDate.value);
+      }
+
+
       if(this.voucherForm.controls.type.value == 'gift'){
         this.voucher.name = this.voucherForm.controls.name.value;
         this.voucher.code = this.voucherForm.controls.code.value;
@@ -228,6 +263,7 @@ export class EditVoucherDialogComponent extends AppComponentBase
         this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
         this.voucher.giftId = 0;
       }
+
 
 
       this._voucherService

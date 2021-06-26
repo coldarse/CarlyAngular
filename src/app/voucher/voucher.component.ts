@@ -14,11 +14,8 @@ class PagedVouchersRequestDto extends PagedRequestDto{
 }
 
 @Component({
-  selector: 'app-voucher',
   templateUrl: './voucher.component.html',
-  styleUrls: ['./voucher.component.css'],
-  animations: [appModuleAnimation()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [appModuleAnimation()]
 })
 export class VoucherComponent extends PagedListingComponentBase<VoucherDto> {
 
@@ -50,7 +47,7 @@ export class VoucherComponent extends PagedListingComponentBase<VoucherDto> {
       )
       .subscribe((result: VoucherDtoPagedResultDto) => {
         this.vouchers = result.items;
-        this.showPaging(result, pageNumber)
+        this.showPaging(result, pageNumber);
       });
   }
 

@@ -1,8 +1,7 @@
-import { Component, Injector, OnInit, Output } from '@angular/core';
+import { Component, Injector, OnInit, Output, EventEmitter } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { AddOn, AddOnDto, PermissionDto, PrincipalDto, PrincipalServiceProxy } from '@shared/service-proxies/service-proxies';
-import { EventEmitter } from 'events';
+import { AddOnDto, PrincipalDto, PrincipalServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -15,7 +14,7 @@ export class CreatePrincipalDialogComponent extends AppComponentBase
   principal = new PrincipalDto();
   addoncount = 0;
 
-  // @Output() onSave = new EventEmitter<any>();
+  @Output() onSave = new EventEmitter<any>();
 
   public principalForm : FormGroup;
 
@@ -89,6 +88,7 @@ export class CreatePrincipalDialogComponent extends AppComponentBase
         .subscribe(() => {
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
+          this.onSave.emit();
         })
     } catch (error) {
       this.saving = false;

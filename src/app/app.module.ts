@@ -40,12 +40,19 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { AddOnServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, PackageServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreatePrincipalDialogComponent } from './principal/create-principal-dialog/create-principal-dialog.component';
 import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/edit-principal-dialog.component';
 import { CreateVoucherDialogComponent } from './voucher/create-voucher-dialog/create-voucher-dialog.component';
 import { EditVoucherDialogComponent } from './voucher/edit-voucher-dialog/edit-voucher-dialog.component';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { PackageComponent } from './package/package.component';
+import { CreatePackageDialogComponent } from './package/create-package-dialog/create-package-dialog.component';
+import { EditPackageDialogComponent } from './package/edit-package-dialog/edit-package-dialog.component';
+import { AddPackagePrincipalComponent } from './package/add-package-principal/add-package-principal.component';
+import { EditPackagePrincipalComponent } from './package/edit-package-principal/edit-package-principal.component';
+
+import { AddOnChecked } from './model/AddOnChecked'
 
 @NgModule({
   declarations: [
@@ -81,7 +88,12 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     CreatePrincipalDialogComponent,
     EditPrincipalDialogComponent,
     CreateVoucherDialogComponent,
-    EditVoucherDialogComponent
+    EditVoucherDialogComponent,
+    PackageComponent,
+    CreatePackageDialogComponent,
+    EditPackageDialogComponent,
+    AddPackagePrincipalComponent,
+    EditPackagePrincipalComponent
   ],
   imports: [
     CommonModule,
@@ -103,7 +115,11 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [
     PrincipalServiceProxy,
     VoucherServiceProxy,
-    AddOnServiceProxy
+    AddOnServiceProxy,
+    PackageServiceProxy,
+    CustomerPrincipalServiceProxy,
+    CustomerAddOnServiceProxy,
+    AddOnChecked,
   ],
   entryComponents: [
     // tenants

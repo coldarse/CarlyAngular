@@ -1,0 +1,180 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  [formGroup] ="packageForm"
+  (ngSubmit)="save()"
+  *ngIf="showEdit"
+>
+  <abp-modal-header
+    [title]="'EditPackage' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="ownerName">
+        {{ "OwnerName" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="ownerName"
+          id="ownerName"
+          minlength="2"
+          maxlength="64"
+          required
+          formControlName="ownerName"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="ownerNRIC">
+          {{ "OwnerNRIC" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="ownerNRIC"
+            id="ownerNRIC"
+            minlength="5"
+            maxlength="12"
+            placeholder="123456001234"
+            required
+            formControlName="ownerNRIC"
+          />
+        </div>
+    </div>
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="ownerEmail">
+          {{ "OwnerEmail" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="email"
+            class="form-control"
+            name="ownerEmail"
+            id="ownerEmail"
+            minlength="2"
+            maxlength="64"
+            placeholder="example@example.com"
+            required
+            formControlName="ownerEmail"
+          />
+        </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="ownerPhoneNo">
+        {{ "OwnerPhoneNo" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="ownerPhoneNo"
+          id="ownerPhoneNo"
+          minlength="1"
+          maxlength="13"
+          placeholder="60123456789"
+          required
+          formControlName="ownerPhoneNo"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="vehicleModel">
+        {{ "VehicleModel" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="vehicleModel"
+          id="vehicleModel"
+          minlength="2"
+          maxlength="64"
+          required
+          formControlName="vehicleModel"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="vehicleRegNo">
+        {{ "VehicleRegNo" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="vehicleRegNo"
+          id="vehicleRegNo"
+          minlength="1"
+          maxlength="10"
+          required
+          formControlName="vehicleRegNo"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="vehicleYear">
+        {{ "VehicleYear" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="vehicleYear"
+          id="vehicleYear"
+          minlength="4"
+          maxlength="4"
+          required
+          formControlName="vehicleYear"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="coverType">
+        {{ "CoverType" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="coverType"
+          id="coverType"
+          minlength="2"
+          maxlength="64"
+          required
+          formControlName="coverType"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="coveragePeriod">
+        {{ "CoveragePeriod" | localize }}
+      </label>
+      <div class="col-md-7">
+        <input
+          type="text"
+          class="form-control"
+          name="coveragePeriod"
+          id="coveragePeriod"
+          minlength="1"
+          maxlength="2"
+          required
+          formControlName="coveragePeriod"
+        />
+      </div>
+      <div class="col-md-2">
+        <h6 style="padding-top: 0.6rem; font-weight: 10; font-style: italic;">
+          {{ "Months" | localize }}
+        </h6>
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!packageForm.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

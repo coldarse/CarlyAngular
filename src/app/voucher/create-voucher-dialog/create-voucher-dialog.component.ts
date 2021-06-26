@@ -1,9 +1,8 @@
-import { Component, Injector, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Injector, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AddOn, AddOnDto, AddOnDtoPagedResultDto, AddOnServiceProxy, Principal, PrincipalDto, PrincipalDtoPagedResultDto, PrincipalServiceProxy, VoucherDto, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
-import { EventEmitter } from 'events';
+import { AddOnDto, Principal, PrincipalDto, PrincipalDtoPagedResultDto, PrincipalServiceProxy, VoucherDto, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
@@ -14,7 +13,7 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./create-voucher-dialog.component.css']
 })
 export class CreateVoucherDialogComponent extends AppComponentBase
-  implements OnInit {
+implements OnInit {
 
   xFreeGift = true;
   xDiscount = true;
@@ -29,7 +28,7 @@ export class CreateVoucherDialogComponent extends AppComponentBase
   vStartDate;
   vEndDate;
 
-  // @Output() onSave = new EventEmitter<any>();
+  @Output() onSave = new EventEmitter<any>();
 
   public voucherForm : FormGroup;
 
@@ -88,6 +87,14 @@ export class CreateVoucherDialogComponent extends AppComponentBase
     this.vEndDate = new Date(finalDate);
   }
 
+  setDateFromDatePicker(datepickerdate){
+    let year = datepickerdate.year;
+    let month = datepickerdate.month <= 9 ? '0' + datepickerdate.month : datepickerdate.month;;
+    let day = datepickerdate.day <= 9 ? '0' + datepickerdate.day : datepickerdate.day;;
+    let finalDate = year + "/" + month + "/" + day;
+    return new Date(finalDate);
+  }
+
   voucherType(event: any){
     if(event.target.value == 'discount'){
       this.xFreeGift = false;
@@ -120,6 +127,15 @@ export class CreateVoucherDialogComponent extends AppComponentBase
     try{
       this.saving = true;
 
+      if(this.vStartDate == undefined){
+        this.vStartDate = this.setDateFromDatePicker(this.voucherForm.controls.startDate.value);
+      }
+
+      if(this.vEndDate == undefined){
+        this.vEndDate = this.setDateFromDatePicker(this.voucherForm.controls.endDate.value);
+      }
+
+
       if(this.voucherForm.controls.type.value == 'gift'){
         this.voucher.name = this.voucherForm.controls.name.value;
         this.voucher.code = this.voucherForm.controls.code.value;
@@ -147,7 +163,6 @@ export class CreateVoucherDialogComponent extends AppComponentBase
         this.voucher.giftId = 0;
       }
 
-      console.log(this.voucher);
 
       this._voucherService
         .create(this.voucher)
@@ -159,6 +174,7 @@ export class CreateVoucherDialogComponent extends AppComponentBase
         .subscribe(() => {
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
+          this.onSave.emit();
         });
     }
     catch(error){

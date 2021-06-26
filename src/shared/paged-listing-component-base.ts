@@ -35,6 +35,7 @@ export abstract class PagedListingComponentBase<TEntityDto> extends AppComponent
     }
 
     refresh(): void {
+        console.log("refresh");
         this.getDataPage(this.pageNumber);
     }
 
@@ -50,7 +51,7 @@ export abstract class PagedListingComponentBase<TEntityDto> extends AppComponent
         req.maxResultCount = this.pageSize;
         req.skipCount = (page - 1) * this.pageSize;
 
-        this.isTableLoading = false;
+        this.isTableLoading = true;
         this.list(req, page, () => {
             this.isTableLoading = false;
         });

@@ -1,0 +1,118 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  [formGroup] ="principalForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'AddCustomerPrincipal' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="name">
+          {{ "PrincipalName" | localize }}
+        </label>
+        <div class="col-md-9">
+            <select
+              class="form-control" 
+              name="principal" 
+              id="principal"
+              required
+              formControlName="principal" 
+              (change)="selectedPrincipal($event)"
+              >
+              <option value="0">{{ "PleaseSelectOne" | localize }}</option>
+              <option value="{{prin.id}}" *ngFor="let prin of tempprincipal">{{ prin.name }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="premium">
+          {{ "PremiumAmount" | localize }}
+        </label>
+        <div class="col-md-9">
+            <input
+            type="text"
+            class="form-control"
+            name="premium"
+            id="premium"
+            minlength="1"
+            maxlength="128"
+            required
+            formControlName="premium"
+            />
+        </div>
+    </div>
+    <div formArrayName="addOns">
+        <div class="col-md-9" *ngFor="let ao of tempaddonChecked; let i=index">
+            <input
+            type="checkbox"
+            name="addOnCheckBox"
+            id="addOnCheckBox"
+            (change)="toggleAddOn($event, i)"
+            />   {{ ao.addonname }}
+    
+            <div *ngIf="ao.checked" [formGroupName]="i">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="addonname">
+                      {{ "AddOnName" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="addonname"
+                        id="addonname"
+                        minlength="1"
+                        maxlength="128"
+                        required
+                        formControlName="addonname"
+                        />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="desc">
+                      {{ "AddOnDesc" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="desc"
+                        id="desc"
+                        minlength="1"
+                        maxlength="128"
+                        required
+                        formControlName="desc"
+                        />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="price">
+                      {{ "AddOnPrice" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="price"
+                        id="price"
+                        minlength="1"
+                        maxlength="128"
+                        required
+                        formControlName="price"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!principalForm.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

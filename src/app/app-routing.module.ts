@@ -10,6 +10,7 @@ import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
+import { PackageComponent } from './package/package.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { VoucherComponent } from './voucher/voucher.component';
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'principal', component: PrincipalComponent, data: { permission: 'Pages.Principals' }, canActivate: [AppRouteGuard] },
                     { path: 'voucher', component: VoucherComponent, data: { permission: 'Pages.Vouchers' }, canActivate: [AppRouteGuard] },
+                    { path: 'package', component: PackageComponent, data: { permission: 'Pages.Packages' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]
             }
