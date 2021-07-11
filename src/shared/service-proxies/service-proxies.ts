@@ -1205,6 +1205,302 @@ export class CustomerPrincipalServiceProxy {
 }
 
 @Injectable()
+export class GeneratedVoucherServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<GeneratedVoucherDto> {
+        let url_ = this.baseUrl + "/api/services/app/GeneratedVoucher/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<GeneratedVoucherDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GeneratedVoucherDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<GeneratedVoucherDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GeneratedVoucherDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GeneratedVoucherDto>(<any>null);
+    }
+
+    /**
+     * @param keyword (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(keyword: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GeneratedVoucherDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/GeneratedVoucher/GetAll?";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<GeneratedVoucherDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GeneratedVoucherDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<GeneratedVoucherDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GeneratedVoucherDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GeneratedVoucherDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: GeneratedVoucherDto | undefined): Observable<GeneratedVoucherDto> {
+        let url_ = this.baseUrl + "/api/services/app/GeneratedVoucher/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<GeneratedVoucherDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GeneratedVoucherDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<GeneratedVoucherDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GeneratedVoucherDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GeneratedVoucherDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: GeneratedVoucherDto | undefined): Observable<GeneratedVoucherDto> {
+        let url_ = this.baseUrl + "/api/services/app/GeneratedVoucher/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<GeneratedVoucherDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GeneratedVoucherDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<GeneratedVoucherDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GeneratedVoucherDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GeneratedVoucherDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/GeneratedVoucher/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class PackageServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -1268,6 +1564,62 @@ export class PackageServiceProxy {
             }));
         }
         return _observableOf<Package[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getPackageById(id: number | undefined): Observable<Package> {
+        let url_ = this.baseUrl + "/api/services/app/Package/GetPackageById?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPackageById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPackageById(<any>response_);
+                } catch (e) {
+                    return <Observable<Package>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Package>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPackageById(response: HttpResponseBase): Observable<Package> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Package.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Package>(<any>null);
     }
 
     /**
@@ -2958,6 +3310,222 @@ export class TokenAuthServiceProxy {
     }
 
     /**
+     * @param redeemvoucher (optional) 
+     * @return Success
+     */
+    redeemVoucher(redeemvoucher: string | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/TokenAuth/RedeemVoucher?";
+        if (redeemvoucher !== undefined)
+            url_ += "redeemvoucher=" + encodeURIComponent("" + redeemvoucher) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRedeemVoucher(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRedeemVoucher(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRedeemVoucher(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param getpackagebyid (optional) 
+     * @return Success
+     */
+    getPackageById(getpackagebyid: string | null | undefined): Observable<Package> {
+        let url_ = this.baseUrl + "/api/TokenAuth/GetPackageById?";
+        if (getpackagebyid !== undefined)
+            url_ += "getpackagebyid=" + encodeURIComponent("" + getpackagebyid) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPackageById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPackageById(<any>response_);
+                } catch (e) {
+                    return <Observable<Package>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Package>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPackageById(response: HttpResponseBase): Observable<Package> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Package.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Package>(<any>null);
+    }
+
+    /**
+     * @param isvouchervalid (optional) 
+     * @return Success
+     */
+    isVoucherValid(isvouchervalid: string | null | undefined): Observable<IsValidDto> {
+        let url_ = this.baseUrl + "/api/TokenAuth/isVoucherValid?";
+        if (isvouchervalid !== undefined)
+            url_ += "isvouchervalid=" + encodeURIComponent("" + isvouchervalid) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIsVoucherValid(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIsVoucherValid(<any>response_);
+                } catch (e) {
+                    return <Observable<IsValidDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IsValidDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processIsVoucherValid(response: HttpResponseBase): Observable<IsValidDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IsValidDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IsValidDto>(<any>null);
+    }
+
+    /**
+     * @param getgift (optional) 
+     * @return Success
+     */
+    getGift(getgift: string | null | undefined): Observable<GiftDto> {
+        let url_ = this.baseUrl + "/api/TokenAuth/getGift?";
+        if (getgift !== undefined)
+            url_ += "getgift=" + encodeURIComponent("" + getgift) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGift(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGift(<any>response_);
+                } catch (e) {
+                    return <Observable<GiftDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GiftDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetGift(response: HttpResponseBase): Observable<GiftDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GiftDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GiftDto>(<any>null);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -3620,6 +4188,62 @@ export class UserServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    sendEmail(body: EmailContentDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/User/SendEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSendEmail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSendEmail(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSendEmail(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -3752,6 +4376,237 @@ export class VoucherServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param vouchercode (optional) 
+     * @param packageid (optional) 
+     * @param claimDate (optional) 
+     * @return Success
+     */
+    redeemVoucher(vouchercode: string | null | undefined, packageid: number | undefined, claimDate: string | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Voucher/RedeemVoucher?";
+        if (vouchercode !== undefined)
+            url_ += "vouchercode=" + encodeURIComponent("" + vouchercode) + "&";
+        if (packageid === null)
+            throw new Error("The parameter 'packageid' cannot be null.");
+        else if (packageid !== undefined)
+            url_ += "packageid=" + encodeURIComponent("" + packageid) + "&";
+        if (claimDate !== undefined)
+            url_ += "claimDate=" + encodeURIComponent("" + claimDate) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRedeemVoucher(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRedeemVoucher(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRedeemVoucher(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createNewVoucher(body: VoucherDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Voucher/CreateNewVoucher";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateNewVoucher(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateNewVoucher(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateNewVoucher(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    generateVouchers(id: number | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Voucher/GenerateVouchers?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateVouchers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateVouchers(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGenerateVouchers(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param vouchercode (optional) 
+     * @param claimDate (optional) 
+     * @return Success
+     */
+    isVoucherValid(vouchercode: string | null | undefined, claimDate: string | null | undefined): Observable<IsValidDto> {
+        let url_ = this.baseUrl + "/api/services/app/Voucher/isVoucherValid?";
+        if (vouchercode !== undefined)
+            url_ += "vouchercode=" + encodeURIComponent("" + vouchercode) + "&";
+        if (claimDate !== undefined)
+            url_ += "claimDate=" + encodeURIComponent("" + claimDate) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIsVoucherValid(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIsVoucherValid(<any>response_);
+                } catch (e) {
+                    return <Observable<IsValidDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IsValidDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processIsVoucherValid(response: HttpResponseBase): Observable<IsValidDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IsValidDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IsValidDto>(<any>null);
     }
 
     /**
@@ -4760,6 +5615,128 @@ export interface ICustomerPrincipalDtoPagedResultDto {
     items: CustomerPrincipalDto[] | undefined;
 }
 
+export class GeneratedVoucherDto implements IGeneratedVoucherDto {
+    code: string | undefined;
+    startDate: moment.Moment;
+    endDate: moment.Moment;
+    isRedeemed: boolean;
+    type: string | undefined;
+    redeemedByPackage: number;
+    id: number;
+
+    constructor(data?: IGeneratedVoucherDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.code = _data["code"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? moment(_data["endDate"].toString()) : <any>undefined;
+            this.isRedeemed = _data["isRedeemed"];
+            this.type = _data["type"];
+            this.redeemedByPackage = _data["redeemedByPackage"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GeneratedVoucherDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GeneratedVoucherDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["isRedeemed"] = this.isRedeemed;
+        data["type"] = this.type;
+        data["redeemedByPackage"] = this.redeemedByPackage;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): GeneratedVoucherDto {
+        const json = this.toJSON();
+        let result = new GeneratedVoucherDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGeneratedVoucherDto {
+    code: string | undefined;
+    startDate: moment.Moment;
+    endDate: moment.Moment;
+    isRedeemed: boolean;
+    type: string | undefined;
+    redeemedByPackage: number;
+    id: number;
+}
+
+export class GeneratedVoucherDtoPagedResultDto implements IGeneratedVoucherDtoPagedResultDto {
+    totalCount: number;
+    items: GeneratedVoucherDto[] | undefined;
+
+    constructor(data?: IGeneratedVoucherDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(GeneratedVoucherDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GeneratedVoucherDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GeneratedVoucherDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GeneratedVoucherDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new GeneratedVoucherDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGeneratedVoucherDtoPagedResultDto {
+    totalCount: number;
+    items: GeneratedVoucherDto[] | undefined;
+}
+
 export class Package implements IPackage {
     ownerName: string | undefined;
     ownerNRIC: string | undefined;
@@ -4771,6 +5748,7 @@ export class Package implements IPackage {
     coverType: string | undefined;
     coveragePeriod: number;
     principals: CustomerPrincipal[] | undefined;
+    status: string | undefined;
     id: number;
 
     constructor(data?: IPackage) {
@@ -4798,6 +5776,7 @@ export class Package implements IPackage {
                 for (let item of _data["principals"])
                     this.principals.push(CustomerPrincipal.fromJS(item));
             }
+            this.status = _data["status"];
             this.id = _data["id"];
         }
     }
@@ -4825,6 +5804,7 @@ export class Package implements IPackage {
             for (let item of this.principals)
                 data["principals"].push(item.toJSON());
         }
+        data["status"] = this.status;
         data["id"] = this.id;
         return data; 
     }
@@ -4848,6 +5828,7 @@ export interface IPackage {
     coverType: string | undefined;
     coveragePeriod: number;
     principals: CustomerPrincipal[] | undefined;
+    status: string | undefined;
     id: number;
 }
 
@@ -4862,6 +5843,7 @@ export class PackageDto implements IPackageDto {
     coverType: string | undefined;
     coveragePeriod: number;
     principals: CustomerPrincipalDto[] | undefined;
+    status: string | undefined;
     id: number;
 
     constructor(data?: IPackageDto) {
@@ -4889,6 +5871,7 @@ export class PackageDto implements IPackageDto {
                 for (let item of _data["principals"])
                     this.principals.push(CustomerPrincipalDto.fromJS(item));
             }
+            this.status = _data["status"];
             this.id = _data["id"];
         }
     }
@@ -4916,6 +5899,7 @@ export class PackageDto implements IPackageDto {
             for (let item of this.principals)
                 data["principals"].push(item.toJSON());
         }
+        data["status"] = this.status;
         data["id"] = this.id;
         return data; 
     }
@@ -4939,6 +5923,7 @@ export interface IPackageDto {
     coverType: string | undefined;
     coveragePeriod: number;
     principals: CustomerPrincipalDto[] | undefined;
+    status: string | undefined;
     id: number;
 }
 
@@ -6212,6 +7197,124 @@ export interface ITenantDtoPagedResultDto {
     items: TenantDto[] | undefined;
 }
 
+export class IsValidDto implements IIsValidDto {
+    isValid: boolean;
+    type: string | undefined;
+    minAmount: number;
+    discountAmount: number;
+    giftId: number;
+    reason: string | undefined;
+
+    constructor(data?: IIsValidDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isValid = _data["isValid"];
+            this.type = _data["type"];
+            this.minAmount = _data["minAmount"];
+            this.discountAmount = _data["discountAmount"];
+            this.giftId = _data["giftId"];
+            this.reason = _data["reason"];
+        }
+    }
+
+    static fromJS(data: any): IsValidDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IsValidDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isValid"] = this.isValid;
+        data["type"] = this.type;
+        data["minAmount"] = this.minAmount;
+        data["discountAmount"] = this.discountAmount;
+        data["giftId"] = this.giftId;
+        data["reason"] = this.reason;
+        return data; 
+    }
+
+    clone(): IsValidDto {
+        const json = this.toJSON();
+        let result = new IsValidDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIsValidDto {
+    isValid: boolean;
+    type: string | undefined;
+    minAmount: number;
+    discountAmount: number;
+    giftId: number;
+    reason: string | undefined;
+}
+
+export class GiftDto implements IGiftDto {
+    addOnId: number;
+    addOnName: string | undefined;
+    principalId: number;
+    principalName: string | undefined;
+
+    constructor(data?: IGiftDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.addOnId = _data["addOnId"];
+            this.addOnName = _data["addOnName"];
+            this.principalId = _data["principalId"];
+            this.principalName = _data["principalName"];
+        }
+    }
+
+    static fromJS(data: any): GiftDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GiftDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["addOnId"] = this.addOnId;
+        data["addOnName"] = this.addOnName;
+        data["principalId"] = this.principalId;
+        data["principalName"] = this.principalName;
+        return data; 
+    }
+
+    clone(): GiftDto {
+        const json = this.toJSON();
+        let result = new GiftDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGiftDto {
+    addOnId: number;
+    addOnName: string | undefined;
+    principalId: number;
+    principalName: string | undefined;
+}
+
 export class AuthenticateModel implements IAuthenticateModel {
     userNameOrEmailAddress: string;
     password: string;
@@ -6868,6 +7971,65 @@ export interface IResetPasswordDto {
     newPassword: string;
 }
 
+export class EmailContentDto implements IEmailContentDto {
+    emailAddressList: string | undefined;
+    trxDate: moment.Moment;
+    language: string | undefined;
+    attachmentFileName: string | undefined;
+    attachment: string | undefined;
+
+    constructor(data?: IEmailContentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.emailAddressList = _data["emailAddressList"];
+            this.trxDate = _data["trxDate"] ? moment(_data["trxDate"].toString()) : <any>undefined;
+            this.language = _data["language"];
+            this.attachmentFileName = _data["attachmentFileName"];
+            this.attachment = _data["attachment"];
+        }
+    }
+
+    static fromJS(data: any): EmailContentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailContentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["emailAddressList"] = this.emailAddressList;
+        data["trxDate"] = this.trxDate ? this.trxDate.toISOString() : <any>undefined;
+        data["language"] = this.language;
+        data["attachmentFileName"] = this.attachmentFileName;
+        data["attachment"] = this.attachment;
+        return data; 
+    }
+
+    clone(): EmailContentDto {
+        const json = this.toJSON();
+        let result = new EmailContentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmailContentDto {
+    emailAddressList: string | undefined;
+    trxDate: moment.Moment;
+    language: string | undefined;
+    attachmentFileName: string | undefined;
+    attachment: string | undefined;
+}
+
 export class UserDtoPagedResultDto implements IUserDtoPagedResultDto {
     totalCount: number;
     items: UserDto[] | undefined;
@@ -6934,6 +8096,7 @@ export class VoucherDto implements IVoucherDto {
     limit: number;
     discountAmount: number;
     giftId: number;
+    isGenerated: boolean;
     id: number;
 
     constructor(data?: IVoucherDto) {
@@ -6957,6 +8120,7 @@ export class VoucherDto implements IVoucherDto {
             this.limit = _data["limit"];
             this.discountAmount = _data["discountAmount"];
             this.giftId = _data["giftId"];
+            this.isGenerated = _data["isGenerated"];
             this.id = _data["id"];
         }
     }
@@ -6980,6 +8144,7 @@ export class VoucherDto implements IVoucherDto {
         data["limit"] = this.limit;
         data["discountAmount"] = this.discountAmount;
         data["giftId"] = this.giftId;
+        data["isGenerated"] = this.isGenerated;
         data["id"] = this.id;
         return data; 
     }
@@ -7003,6 +8168,7 @@ export interface IVoucherDto {
     limit: number;
     discountAmount: number;
     giftId: number;
+    isGenerated: boolean;
     id: number;
 }
 

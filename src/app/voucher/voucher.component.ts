@@ -51,14 +51,14 @@ export class VoucherComponent extends PagedListingComponentBase<VoucherDto> {
       });
   }
 
-  delete(principal: VoucherDto): void {
+  delete(voucher: VoucherDto): void {
     abp.message.confirm(
-      this.l('VoucherDeleteWarningMessage', principal.name),
+      this.l('VoucherDeleteWarningMessage', voucher.name),
       undefined,
       (result: boolean) => {
         if (result) {
           this._vouchersService
-            .delete(principal.id)
+            .delete(voucher.id)
             .pipe(
               finalize(() => {
                 abp.notify.success(this.l('SuccessfullyDeleted'));
@@ -69,6 +69,19 @@ export class VoucherComponent extends PagedListingComponentBase<VoucherDto> {
         }
       }
     );
+  }
+
+  generate(voucher: VoucherDto): void {
+    this._vouchersService.generateVouchers(voucher.id)
+    .pipe(
+      finalize(() => {
+      })
+    ).subscribe((data: any) => {
+      if(data == true){
+        abp.notify.success(this.l('SuccessfullyGenerated'));
+        this.refresh();
+      }
+    });
   }
 
   createVoucher(): void {

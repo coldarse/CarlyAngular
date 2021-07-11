@@ -58,7 +58,8 @@
                     <td>
                       <button type="button"
                         class="btn btn-sm bg-secondary"
-                        (click)="editVoucher(voucher)">
+                        (click)="editVoucher(voucher)"
+                        *ngIf="!voucher.isGenerated">
                         <i class="fas fa-pencil-alt"></i>
                         {{ "Edit" | localize }}
                       </button>
@@ -67,6 +68,13 @@
                         (click)="delete(voucher)">
                         <i class="fas fa-trash"></i>
                         {{ "Delete" | localize }}
+                      </button>
+                      <button type="button"
+                        class="btn btn-sm bg-warning mx-2"
+                        (click)="generate(voucher)"
+                        *ngIf="!voucher.isGenerated">
+                        <i class="fas fa-cogs"></i>
+                        {{ "Generate" | localize }}
                       </button>
                     </td>
                   </tr>

@@ -40,7 +40,7 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, PackageServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, GeneratedVoucherServiceProxy, PackageServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreatePrincipalDialogComponent } from './principal/create-principal-dialog/create-principal-dialog.component';
 import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/edit-principal-dialog.component';
 import { CreateVoucherDialogComponent } from './voucher/create-voucher-dialog/create-voucher-dialog.component';
@@ -52,7 +52,8 @@ import { EditPackageDialogComponent } from './package/edit-package-dialog/edit-p
 import { AddPackagePrincipalComponent } from './package/add-package-principal/add-package-principal.component';
 import { EditPackagePrincipalComponent } from './package/edit-package-principal/edit-package-principal.component';
 
-import { AddOnChecked } from './model/AddOnChecked'
+import { AddOnChecked } from './model/AddOnChecked';
+import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher.component'
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { AddOnChecked } from './model/AddOnChecked'
     CreatePackageDialogComponent,
     EditPackageDialogComponent,
     AddPackagePrincipalComponent,
-    EditPackagePrincipalComponent
+    EditPackagePrincipalComponent,
+    GeneratedVoucherComponent
   ],
   imports: [
     CommonModule,
@@ -120,6 +122,7 @@ import { AddOnChecked } from './model/AddOnChecked'
     CustomerPrincipalServiceProxy,
     CustomerAddOnServiceProxy,
     AddOnChecked,
+    GeneratedVoucherServiceProxy
   ],
   entryComponents: [
     // tenants

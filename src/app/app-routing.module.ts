@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { PackageComponent } from './package/package.component';
+import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher.component';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { PackageComponent } from './package/package.component';
                     { path: 'principal', component: PrincipalComponent, data: { permission: 'Pages.Principals' }, canActivate: [AppRouteGuard] },
                     { path: 'voucher', component: VoucherComponent, data: { permission: 'Pages.Vouchers' }, canActivate: [AppRouteGuard] },
                     { path: 'package', component: PackageComponent, data: { permission: 'Pages.Packages' }, canActivate: [AppRouteGuard] },
+                    { path: 'generatedVouchers', component: GeneratedVoucherComponent, data: { permission: 'Pages.GeneratedVouchers' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]
             }

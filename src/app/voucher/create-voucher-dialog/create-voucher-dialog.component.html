@@ -40,8 +40,15 @@
                 maxlength="4"
                 required
                 formControlName="code"
+                text-transform:uppercase;
               />
             </div>
+            <div class="col-md-3">
+
+            </div>
+            <label class="col-md-9" style="color: crimson;" *ngIf="codeExist"> 
+              {{ "CodeAlreadyExist" | localize}}
+            </label>
         </div>
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="minimum">
@@ -136,7 +143,7 @@
             name="limit"
             id="limit"
             minlength="1"
-            maxlength="128"
+            maxlength="4"
             required
             formControlName="limit"
           />

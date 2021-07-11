@@ -244,11 +244,11 @@ export class EditVoucherDialogComponent extends AppComponentBase
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        //this.voucher.code = this.voucherForm.controls.enable.value;
         this.voucher.limit = this.voucherForm.controls.limit.value;
         this.voucher.type = this.voucherForm.controls.type.value;
         this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
         this.voucher.giftId = this.voucherForm.controls.addon.value;
+        this.voucher.isGenerated = false;
       }
       else{
         this.voucher.name = this.voucherForm.controls.name.value;
@@ -257,11 +257,11 @@ export class EditVoucherDialogComponent extends AppComponentBase
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        //this.voucher.code = this.voucherForm.controls.enable.value;
         this.voucher.limit = this.voucherForm.controls.limit.value;
         this.voucher.type = this.voucherForm.controls.type.value;
         this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
         this.voucher.giftId = 0;
+        this.voucher.isGenerated = false;
       }
 
 

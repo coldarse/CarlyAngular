@@ -25,6 +25,8 @@ implements OnInit {
 
   selectAddOn : any ;
 
+  codeExist = false;
+
   vStartDate;
   vEndDate;
 
@@ -125,6 +127,7 @@ implements OnInit {
   
   save(): void{
     try{
+      this.codeExist = false;
       this.saving = true;
 
       if(this.vStartDate == undefined){
@@ -143,11 +146,11 @@ implements OnInit {
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        //this.voucher.code = this.voucherForm.controls.enable.value;
         this.voucher.limit = this.voucherForm.controls.limit.value;
         this.voucher.type = this.voucherForm.controls.type.value;
         this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
         this.voucher.giftId = this.voucherForm.controls.addon.value;
+        this.voucher.isGenerated = false;
       }
       else{
         this.voucher.name = this.voucherForm.controls.name.value;
@@ -156,25 +159,30 @@ implements OnInit {
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        //this.voucher.code = this.voucherForm.controls.enable.value;
         this.voucher.limit = this.voucherForm.controls.limit.value;
         this.voucher.type = this.voucherForm.controls.type.value;
         this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
         this.voucher.giftId = 0;
+        this.voucher.isGenerated = false;
       }
 
 
       this._voucherService
-        .create(this.voucher)
+        .createNewVoucher(this.voucher)
         .pipe(
           finalize(() => {
             this.saving = false;
           })
         )
-        .subscribe(() => {
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
+        .subscribe((data: any) => {
+          if(data.result == 'true'){
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          }
+          else{
+            this.codeExist = true;
+          }
         });
     }
     catch(error){
