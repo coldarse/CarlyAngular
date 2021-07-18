@@ -175,7 +175,8 @@ implements OnInit {
           })
         )
         .subscribe((data: any) => {
-          if(data.result == 'true'){
+          console.log(data);
+          if(data == true){
             this.notify.info(this.l('SavedSuccessfully'));
             this.bsModalRef.hide();
             this.onSave.emit();
