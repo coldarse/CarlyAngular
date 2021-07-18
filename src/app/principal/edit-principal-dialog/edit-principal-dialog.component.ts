@@ -47,7 +47,7 @@ implements OnInit {
           control.push(this.initEditAddOn(elements));
         })
   
-        this.addoncount = this.principal.addOns.length;
+        this.addoncount = this.principal.addOns.length - 1;
         this.editPrincipalVisible = true;
       }else{
         this.addoncount = 0;
