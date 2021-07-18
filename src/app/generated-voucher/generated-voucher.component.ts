@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 
 class PagedGeneratedVouchersRequestDto extends PagedRequestDto{
   keyword: string;
+  isRedeemed: boolean;
 }
 
 @Component({
@@ -15,7 +16,14 @@ class PagedGeneratedVouchersRequestDto extends PagedRequestDto{
 export class GeneratedVoucherComponent extends PagedListingComponentBase<GeneratedVoucherDto> {
   
   keyword = '';
-  generatedVouchers: GeneratedVoucherDto[] = [];
+  isRedeemed: boolean | null;
+  unredeemedVouchers: GeneratedVoucherDto[] = [];
+  redeemedVouchers: GeneratedVoucherDto[] = [];
+  advancedFiltersVisible = false;
+
+  totalRedeemed = 0;
+  totalUnredeemed = 0;
+
   constructor(
     injector: Injector,
     private _generatedVoucherService: GeneratedVoucherServiceProxy,
@@ -28,19 +36,26 @@ export class GeneratedVoucherComponent extends PagedListingComponentBase<Generat
     pageNumber: number, 
     finishedCallback: Function
     ): void {
-    request.keyword = this.keyword;
+      request.keyword = this.keyword;
+      request.isRedeemed = this.isRedeemed;
 
-    this._generatedVoucherService
-      .getAll(request.keyword, request.skipCount, request.maxResultCount)
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: GeneratedVoucherDtoPagedResultDto) => {
-        this.generatedVouchers = result.items;
-        this.showPaging(result, pageNumber);
-      });
+      this._generatedVoucherService
+        .getAll(
+          request.keyword, 
+          request.isRedeemed,
+          request.skipCount, 
+          request.maxResultCount
+          )
+        .pipe(
+          finalize(() => {
+            finishedCallback();
+          })
+        )
+        .subscribe((result: GeneratedVoucherDtoPagedResultDto) => {
+          this.unredeemedVouchers = result.items;
+          this.totalUnredeemed = result.totalCount;
+          this.showPaging(result, pageNumber);
+        });
   }
   protected delete(entity: GeneratedVoucherDto): void {
     throw new Error('Method not implemented.');

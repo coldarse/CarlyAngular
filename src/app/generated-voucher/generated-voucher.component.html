@@ -21,13 +21,105 @@
                             [(ngModel)]="keyword"
                             (keyup.enter)="getDataPage(1)"
                     />
+                    <div class="input-group-append">
+                      <button
+                              type="button"
+                              class="btn btn-default"
+                              (click)="advancedFiltersVisible = !advancedFiltersVisible"
+                      >
+                          <i
+                                  class="fas"
+                                  [class.fa-angle-up]="advancedFiltersVisible"
+                                  [class.fa-angle-down]="!advancedFiltersVisible"
+                          ></i>
+                      </button>
+                  </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+          <div class="card-body">
+              <form class="form-horizontal">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group row mb-0">
+                              <label class="col-md-3 col-form-label">
+                                  {{ "isRedeemed" | localize }}
+                              </label>
+                              <div class="col-md-9 pt-2">
+                                  <div class="custom-control custom-radio d-inline">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedAll"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="undefined"
+                                              checked
+                                      />
+                                      <label class="custom-control-label" for="isRedeemedAll">
+                                          {{ "All" | localize }}
+                                      </label>
+                                  </div>
+                                  <div class="custom-control custom-radio d-inline mx-3">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedActive"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="true"
+                                      />
+                                      <label
+                                              class="custom-control-label"
+                                              for="isRedeemedActive"
+                                      >
+                                          {{ "Yes" | localize }}
+                                      </label>
+                                  </div>
+                                  <div class="custom-control custom-radio d-inline">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedPassive"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="false"
+                                      />
+                                      <label
+                                              class="custom-control-label"
+                                              for="isRedeemedPassive"
+                                      >
+                                          {{ "No" | localize }}
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="card-footer">
+              <button
+                      type="button"
+                      class="btn bg-blue"
+                      (click)="getDataPage(1)"
+              >
+                  {{ "Search" | localize }}
+              </button>
+              <button
+                      type="button"
+                      class="btn btn-default float-right"
+                      (click)="clearFilters()"
+              >
+                  {{ "Clear" | localize }}
+              </button>
+          </div>
+      </div>
       <div class="container-fluid">
         <div class="row">
           <div class="col-6">
-            <h1>{{ "GeneratedVoucher" | localize }}</h1>
+            <h1>{{ "GeneratedVouchers" | localize }}</h1>
           </div>
         </div>
       </div>
@@ -51,7 +143,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="
-                    let gvoucher of generatedVouchers
+                    let gvoucher1 of unredeemedVouchers
                       | paginate
                         : {
                             id: 'server',
@@ -60,12 +152,12 @@
                             totalItems: totalItems
                           }
                   ">
-                    <td>{{ gvoucher.code }}</td>
-                    <td>{{ gvoucher.startDate | date:'shortDate' }}</td>
-                    <td>{{ gvoucher.endDate | date:'shortDate' }}</td>
-                    <td>{{ gvoucher.type }}</td>
-                    <td>{{ gvoucher.isRedeemed }}</td>
-                    <td>{{ gvoucher.redeemedByPackage }}</td>
+                    <td>{{ gvoucher1.code }}</td>
+                    <td>{{ gvoucher1.startDate | date:'shortDate' }}</td>
+                    <td>{{ gvoucher1.endDate | date:'shortDate' }}</td>
+                    <td>{{ gvoucher1.type }}</td>
+                    <td>{{ gvoucher1.isRedeemed }}</td>
+                    <td>{{ gvoucher1.redeemedByPackage }}</td>
                     
                   </tr>
                 </tbody>
