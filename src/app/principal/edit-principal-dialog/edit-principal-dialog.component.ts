@@ -38,6 +38,7 @@ implements OnInit {
 
       this.principalForm = this._fb.group({
         name: [this.principal.name , Validators.required],
+        desc: [this.principal.description , Validators.required],
         addOns: this._fb.array([])
       });
 
@@ -113,6 +114,7 @@ implements OnInit {
       this.saving = true;
 
       this.principal.name = this.principalForm.controls.name.value;
+      this.principal.description = this.principalForm.controls.desc.value;
   
       this.principal.addOns = [];
       this.principalForm.controls.addOns.value.forEach(element => {

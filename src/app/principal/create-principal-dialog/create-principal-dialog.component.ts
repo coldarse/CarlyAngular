@@ -32,6 +32,7 @@ export class CreatePrincipalDialogComponent extends AppComponentBase
   ngOnInit(): void{
     this.principalForm = this._fb.group({
       name: ['', Validators.required],
+      desc: ['', Validators.required],
       addOns: this._fb.array([
           this.initAddOn(),
       ])
@@ -65,7 +66,7 @@ export class CreatePrincipalDialogComponent extends AppComponentBase
       this.saving = true;
 
       this.principal.name = this.principalForm.controls.name.value;
-
+      this.principal.description = this.principalForm.controls.desc.value;
       
       this.principalForm.controls.addOns.value.forEach(element => {
         let addon = new AddOnDto();

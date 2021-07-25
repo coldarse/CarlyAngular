@@ -82,23 +82,6 @@
       </div>
     </div>
     <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="vehicleModel">
-        {{ "VehicleModel" | localize }}
-      </label>
-      <div class="col-md-9">
-        <input
-          type="text"
-          class="form-control"
-          name="vehicleModel"
-          id="vehicleModel"
-          minlength="2"
-          maxlength="64"
-          required
-          formControlName="vehicleModel"
-        />
-      </div>
-    </div>
-    <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="vehicleRegNo">
         {{ "VehicleRegNo" | localize }}
       </label>
@@ -112,23 +95,6 @@
           maxlength="10"
           required
           formControlName="vehicleRegNo"
-        />
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="vehicleYear">
-        {{ "VehicleYear" | localize }}
-      </label>
-      <div class="col-md-9">
-        <input
-          type="text"
-          class="form-control"
-          name="vehicleYear"
-          id="vehicleYear"
-          minlength="4"
-          maxlength="4"
-          required
-          formControlName="vehicleYear"
         />
       </div>
     </div>
@@ -150,25 +116,20 @@
       </div>
     </div>
     <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="coveragePeriod">
-        {{ "CoveragePeriod" | localize }}
+      <label class="col-md-3 col-form-label" for="policyPeriod">
+        {{ "PolicyPeriod" | localize }}
       </label>
-      <div class="col-md-7">
+      <div class="col-md-9">
         <input
           type="text"
           class="form-control"
-          name="coveragePeriod"
-          id="coveragePeriod"
+          name="policyPeriod"
+          id="policyPeriod"
           minlength="1"
-          maxlength="2"
+          maxlength="125"
           required
-          formControlName="coveragePeriod"
+          formControlName="policyPeriod"
         />
-      </div>
-      <div class="col-md-2">
-        <h6 style="padding-top: 0.6rem; font-weight: 10; font-style: italic;">
-          {{ "Months" | localize }}
-        </h6>
       </div>
     </div>
   </div>

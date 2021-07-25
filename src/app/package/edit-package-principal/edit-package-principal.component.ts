@@ -42,6 +42,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
 
       this.principalForm = this._fb.group({
         name: ['0', Validators.required],
+        prindesc: ['', Validators.required],
         premium: ['0', Validators.required],
         addOns: this._fb.array([])
       });
@@ -86,7 +87,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
 
       let c = this.customerPrincipal.map((x) => {return x.id.toString()}).indexOf(event.target.value.toString());
       this.principalForm.controls.premium.setValue(this.customerPrincipal[c].premium);
-
+      this.principalForm.controls.prindesc.setValue(this.customerPrincipal[c].description);
       this.currentPrincipal = this.customerPrincipal[c].id;
 
       this.customerPrincipal[c].addOns.forEach((obj) => {

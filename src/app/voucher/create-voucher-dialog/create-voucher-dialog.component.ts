@@ -166,7 +166,7 @@ implements OnInit {
         this.voucher.isGenerated = false;
       }
 
-
+      console.log(this.voucher);
       this._voucherService
         .createNewVoucher(this.voucher)
         .pipe(

@@ -81,23 +81,6 @@
       </div>
     </div>
     <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="vehicleModel">
-        {{ "VehicleModel" | localize }}
-      </label>
-      <div class="col-md-9">
-        <input
-          type="text"
-          class="form-control"
-          name="vehicleModel"
-          id="vehicleModel"
-          minlength="2"
-          maxlength="64"
-          required
-          formControlName="vehicleModel"
-        />
-      </div>
-    </div>
-    <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="vehicleRegNo">
         {{ "VehicleRegNo" | localize }}
       </label>
@@ -111,23 +94,6 @@
           maxlength="10"
           required
           formControlName="vehicleRegNo"
-        />
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="vehicleYear">
-        {{ "VehicleYear" | localize }}
-      </label>
-      <div class="col-md-9">
-        <input
-          type="text"
-          class="form-control"
-          name="vehicleYear"
-          id="vehicleYear"
-          minlength="4"
-          maxlength="4"
-          required
-          formControlName="vehicleYear"
         />
       </div>
     </div>
@@ -149,70 +115,22 @@
       </div>
     </div>
     <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="coveragePeriod">
-        {{ "CoveragePeriod" | localize }}
+      <label class="col-md-3 col-form-label" for="policyPeriod">
+        {{ "PolicyPeriod" | localize }}
       </label>
-      <div class="col-md-7">
+      <div class="col-md-9">
         <input
           type="text"
           class="form-control"
-          name="coveragePeriod"
-          id="coveragePeriod"
+          name="policyPeriod"
+          id="policyPeriod"
           minlength="1"
-          maxlength="2"
+          maxlength="125"
           required
-          formControlName="coveragePeriod"
+          formControlName="policyPeriod"
         />
       </div>
-      <div class="col-md-2">
-        <h6 style="padding-top: 0.6rem; font-weight: 10; font-style: italic;">
-          {{ "Months" | localize }}
-        </h6>
-      </div>
     </div>
-    <!-- <div formArrayName="Principals">
-        <div 
-            *ngFor="let principal of packageForm.controls.Principals['controls']; 
-                    let i=index">
-            <div [formGroupName]="i">
-                <div class="form-group row required" [hidden]="addedPrincipal">
-                    <label class="col-md-3 col-form-label" for="name">
-                        {{ "Principal" | localize }} {{i + 1}}
-                    </label>
-                    <select
-                      class="form-control col-md-7" 
-                      name="name" 
-                      id="name"
-                      required
-                      formControlName="name" 
-                      (change)="selectedPrincipal($event)"
-                      >
-                      <option value="0">{{ "PleaseSelectOne" | localize }}</option>
-                      <option value="{{prin.id}}" *ngFor="let prin of principal1">{{ prin.name }}</option>
-                    </select>
-                    <div class="col-md-2">
-                        <a class="btn btn-danger" (click)="removePrincipal(i)" style="cursor: pointer">
-                            Remove
-                        </a>
-                    </div>
-                </div>
-                <div class="form-group row required" *ngIf="addedPrincipal1">
-                  <div class="col-md-9" *ngFor="let ao of principal1.addOns">
-                    <input
-                    type="checkbox"
-                    name="addOnCheckBox"
-                    id="addOnCheckBox"
-                    />   {{ ao.addonname }}
-                  </div>                                     
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="btn btn-info" [hidden]="addoncount >= 4">
-        <a (click)="addAddOn()" style="cursor: pointer">
-            + Add On
-        </a>
-    </div> -->
   </div>
   <abp-modal-footer
     [cancelDisabled]="saving"

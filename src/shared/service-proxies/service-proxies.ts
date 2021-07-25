@@ -4492,6 +4492,58 @@ export class VoucherServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Voucher/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param vouchercode (optional) 
      * @param packageid (optional) 
      * @param claimDate (optional) 
@@ -4952,58 +5004,6 @@ export class VoucherServiceProxy {
             }));
         }
         return _observableOf<VoucherDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Voucher/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
     }
 }
 
@@ -5541,6 +5541,7 @@ export interface ICustomerAddOn {
 
 export class CustomerPrincipal implements ICustomerPrincipal {
     name: string | undefined;
+    description: string | undefined;
     premium: number;
     addOns: CustomerAddOn[] | undefined;
     packageId: number;
@@ -5558,6 +5559,7 @@ export class CustomerPrincipal implements ICustomerPrincipal {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.description = _data["description"];
             this.premium = _data["premium"];
             if (Array.isArray(_data["addOns"])) {
                 this.addOns = [] as any;
@@ -5579,6 +5581,7 @@ export class CustomerPrincipal implements ICustomerPrincipal {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["description"] = this.description;
         data["premium"] = this.premium;
         if (Array.isArray(this.addOns)) {
             data["addOns"] = [];
@@ -5600,6 +5603,7 @@ export class CustomerPrincipal implements ICustomerPrincipal {
 
 export interface ICustomerPrincipal {
     name: string | undefined;
+    description: string | undefined;
     premium: number;
     addOns: CustomerAddOn[] | undefined;
     packageId: number;
@@ -5608,6 +5612,7 @@ export interface ICustomerPrincipal {
 
 export class CustomerPrincipalDto implements ICustomerPrincipalDto {
     name: string | undefined;
+    description: string | undefined;
     premium: number;
     addOns: CustomerAddOnDto[] | undefined;
     packageId: number;
@@ -5625,6 +5630,7 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.description = _data["description"];
             this.premium = _data["premium"];
             if (Array.isArray(_data["addOns"])) {
                 this.addOns = [] as any;
@@ -5646,6 +5652,7 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["description"] = this.description;
         data["premium"] = this.premium;
         if (Array.isArray(this.addOns)) {
             data["addOns"] = [];
@@ -5667,6 +5674,7 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
 
 export interface ICustomerPrincipalDto {
     name: string | undefined;
+    description: string | undefined;
     premium: number;
     addOns: CustomerAddOnDto[] | undefined;
     packageId: number;
@@ -5859,7 +5867,7 @@ export class Package implements IPackage {
     vehicleRegNo: string | undefined;
     vehicleYear: string | undefined;
     coverType: string | undefined;
-    coveragePeriod: number;
+    coveragePeriod: string | undefined;
     principals: CustomerPrincipal[] | undefined;
     status: string | undefined;
     id: number;
@@ -5939,7 +5947,7 @@ export interface IPackage {
     vehicleRegNo: string | undefined;
     vehicleYear: string | undefined;
     coverType: string | undefined;
-    coveragePeriod: number;
+    coveragePeriod: string | undefined;
     principals: CustomerPrincipal[] | undefined;
     status: string | undefined;
     id: number;
@@ -5954,7 +5962,7 @@ export class PackageDto implements IPackageDto {
     vehicleRegNo: string | undefined;
     vehicleYear: string | undefined;
     coverType: string | undefined;
-    coveragePeriod: number;
+    coveragePeriod: string | undefined;
     principals: CustomerPrincipalDto[] | undefined;
     status: string | undefined;
     id: number;
@@ -6034,7 +6042,7 @@ export interface IPackageDto {
     vehicleRegNo: string | undefined;
     vehicleYear: string | undefined;
     coverType: string | undefined;
-    coveragePeriod: number;
+    coveragePeriod: string | undefined;
     principals: CustomerPrincipalDto[] | undefined;
     status: string | undefined;
     id: number;
@@ -6156,6 +6164,7 @@ export interface IAddOn {
 
 export class Principal implements IPrincipal {
     name: string | undefined;
+    description: string | undefined;
     addOns: AddOn[] | undefined;
     id: number;
 
@@ -6171,6 +6180,7 @@ export class Principal implements IPrincipal {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.description = _data["description"];
             if (Array.isArray(_data["addOns"])) {
                 this.addOns = [] as any;
                 for (let item of _data["addOns"])
@@ -6190,6 +6200,7 @@ export class Principal implements IPrincipal {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["description"] = this.description;
         if (Array.isArray(this.addOns)) {
             data["addOns"] = [];
             for (let item of this.addOns)
@@ -6209,12 +6220,14 @@ export class Principal implements IPrincipal {
 
 export interface IPrincipal {
     name: string | undefined;
+    description: string | undefined;
     addOns: AddOn[] | undefined;
     id: number;
 }
 
 export class PrincipalDto implements IPrincipalDto {
     name: string | undefined;
+    description: string | undefined;
     addOns: AddOn[] | undefined;
     id: number;
 
@@ -6230,6 +6243,7 @@ export class PrincipalDto implements IPrincipalDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.description = _data["description"];
             if (Array.isArray(_data["addOns"])) {
                 this.addOns = [] as any;
                 for (let item of _data["addOns"])
@@ -6249,6 +6263,7 @@ export class PrincipalDto implements IPrincipalDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["description"] = this.description;
         if (Array.isArray(this.addOns)) {
             data["addOns"] = [];
             for (let item of this.addOns)
@@ -6268,6 +6283,7 @@ export class PrincipalDto implements IPrincipalDto {
 
 export interface IPrincipalDto {
     name: string | undefined;
+    description: string | undefined;
     addOns: AddOn[] | undefined;
     id: number;
 }

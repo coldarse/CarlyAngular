@@ -26,6 +26,24 @@
         />
       </div>
     </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="desc">
+        {{ "PrincipalDesc" | localize }}
+      </label>
+      <div class="col-md-9">
+        <textarea 
+          class="form-control"
+          name="desc"
+          id="desc"
+          minlength="1"
+          maxlength="586"
+          required
+          formControlName="desc"
+          rows="4" 
+          cols="50">
+          </textarea>
+      </div>
+    </div>
     <div formArrayName="addOns">
         <div 
             *ngFor="let addon of principalForm.controls.addOns['controls']; 
@@ -58,16 +76,17 @@
                       {{ "Description" | localize }} {{i + 1}}
                   </label>
                   <div class="col-md-7">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="desc"
-                      id="desc"
-                      minlength="2"
-                      maxlength="64"
-                      required
-                      formControlName="desc"
-                    />
+                    <textarea 
+                    class="form-control"
+                    name="desc"
+                    id="desc"
+                    minlength="1"
+                    maxlength="586"
+                    required
+                    formControlName="desc"
+                    rows="4" 
+                    cols="50">
+                    </textarea>
                   </div>
                 </div>
                 <div class="form-group row required" >
@@ -90,7 +109,7 @@
             </div>
         </div>
     </div>
-    <div class="btn btn-info" [hidden]="addoncount >= 4">
+    <div class="btn btn-info" [hidden]="addoncount >= 5">
         <a (click)="addAddOn()" style="cursor: pointer">
             + Add On
         </a>

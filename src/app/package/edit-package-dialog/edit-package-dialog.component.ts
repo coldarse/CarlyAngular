@@ -35,16 +35,16 @@ implements OnInit {
       .subscribe((result: PackageDto) => {
         this.package = result;
 
+        console.log(result.coveragePeriod);
+
         this.packageForm = this._fb.group({
           ownerName: [result.ownerName, Validators.required],
           ownerNRIC: [result.ownerNRIC, Validators.required],
           ownerEmail: [result.ownerEmail, Validators.required],
           ownerPhoneNo: [result.ownerPhoneNo, Validators.required],
-          vehicleModel: [result.vehicleModel, Validators.required],
           vehicleRegNo: [result.vehicleRegNo, Validators.required],
-          vehicleYear: [result.vehicleYear, Validators.required],
           coverType: [result.coverType, Validators.required],
-          coveragePeriod: [result.coveragePeriod, Validators.required]
+          policyPeriod: [result.coveragePeriod, Validators.required]
         });
 
         this.showEdit = true;

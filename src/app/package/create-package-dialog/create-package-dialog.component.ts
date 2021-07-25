@@ -37,11 +37,9 @@ implements OnInit {
       ownerNRIC: ['', Validators.required],
       ownerEmail: ['', Validators.required],
       ownerPhoneNo: ['', Validators.required],
-      vehicleModel: ['', Validators.required],
       vehicleRegNo: ['', Validators.required],
-      vehicleYear: ['', Validators.required],
       coverType: ['', Validators.required],
-      coveragePeriod: ['', Validators.required]
+      policyPeriod: ['', Validators.required]
     });
 
 

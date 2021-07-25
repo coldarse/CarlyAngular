@@ -34,6 +34,24 @@
       </div>
     </div>
     <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="prindesc">
+        {{ "PrincipalDescription" | localize }}
+      </label>
+      <div class="col-md-9">
+          <textarea 
+          class="form-control"
+          name="prindesc"
+          id="prindesc"
+          minlength="1"
+          maxlength="586"
+          required
+          formControlName="prindesc"
+          rows="4" 
+          cols="50">
+          </textarea>
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
         <label class="col-md-3 col-form-label" for="premium">
           {{ "PremiumAmount" | localize }}
         </label>
@@ -58,7 +76,7 @@
             id="addOnCheckBox"
             (change)="toggleAddOn($event, i)"
             [checked]="ao.checked"
-            />   {{ ao.addonname }}
+            />&nbsp;&nbsp;&nbsp;<strong style="font-size: 1.25rem; padding-top: 3rem;"><u>{{ ao.addonname }}</u></strong>
     
             <div *ngIf="ao.checked" [formGroupName]="i">
                 <div class="form-group row required">
@@ -83,16 +101,17 @@
                       {{ "AddOnDesc" | localize }}
                     </label>
                     <div class="col-md-9">
-                        <input
-                        type="text"
-                        class="form-control"
-                        name="desc"
-                        id="desc"
-                        minlength="1"
-                        maxlength="128"
-                        required
-                        formControlName="desc"
-                        />
+                      <textarea 
+                      class="form-control"
+                      name="desc"
+                      id="desc"
+                      minlength="1"
+                      maxlength="586"
+                      required
+                      formControlName="desc"
+                      rows="4" 
+                      cols="50">
+                      </textarea>
                     </div>
                 </div>
                 <div class="form-group row required">

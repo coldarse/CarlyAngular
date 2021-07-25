@@ -42,6 +42,7 @@ implements OnInit {
   ngOnInit(): void {
     this.principalForm = this._fb.group({
       name: ['0', Validators.required],
+      prindesc: ['', Validators.required],
       premium: ['', Validators.required],
       addOns: this._fb.array([])
     });
@@ -57,6 +58,8 @@ implements OnInit {
     });
 
   }
+
+ 
 
 
   initEditAddOn(addon: any){
@@ -86,7 +89,7 @@ implements OnInit {
       })
     )
     .subscribe((result: Principal) => {
-      this.principalForm.controls.name.setValue(result.name);
+      this.principalForm.controls.prindesc.setValue(result.description);
       if(result.addOns != null){
         result.addOns.forEach((obj) => {
           this.tempaddonChecked.push(new AddOnChecked(obj));
