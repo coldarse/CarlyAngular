@@ -1681,6 +1681,62 @@ export class PackageServiceProxy {
      * @param id (optional) 
      * @return Success
      */
+    generateLink(id: number | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Package/GenerateLink?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateLink(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateLink(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGenerateLink(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
     get(id: number | undefined): Observable<PackageDto> {
         let url_ = this.baseUrl + "/api/services/app/Package/Get?";
         if (id === null)
@@ -3310,6 +3366,60 @@ export class TokenAuthServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param sales (optional) 
+     * @return Success
+     */
+    createSale(sales: string | null | undefined): Observable<Sale> {
+        let url_ = this.baseUrl + "/api/TokenAuth/CreateSale?";
+        if (sales !== undefined)
+            url_ += "sales=" + encodeURIComponent("" + sales) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateSale(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateSale(<any>response_);
+                } catch (e) {
+                    return <Observable<Sale>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Sale>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateSale(response: HttpResponseBase): Observable<Sale> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Sale.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Sale>(<any>null);
     }
 
     /**
@@ -7324,6 +7434,89 @@ export class TenantDtoPagedResultDto implements ITenantDtoPagedResultDto {
 export interface ITenantDtoPagedResultDto {
     totalCount: number;
     items: TenantDto[] | undefined;
+}
+
+export class Sale implements ISale {
+    package: number;
+    selectedPrincipal: number;
+    selectedAddOns: string | undefined;
+    premium: number;
+    transactionDateTime: moment.Moment;
+    address1: string | undefined;
+    address2: string | undefined;
+    postcode: string | undefined;
+    city: string | undefined;
+    state: string | undefined;
+    id: number;
+
+    constructor(data?: ISale) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.package = _data["package"];
+            this.selectedPrincipal = _data["selectedPrincipal"];
+            this.selectedAddOns = _data["selectedAddOns"];
+            this.premium = _data["premium"];
+            this.transactionDateTime = _data["transactionDateTime"] ? moment(_data["transactionDateTime"].toString()) : <any>undefined;
+            this.address1 = _data["address1"];
+            this.address2 = _data["address2"];
+            this.postcode = _data["postcode"];
+            this.city = _data["city"];
+            this.state = _data["state"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Sale {
+        data = typeof data === 'object' ? data : {};
+        let result = new Sale();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["package"] = this.package;
+        data["selectedPrincipal"] = this.selectedPrincipal;
+        data["selectedAddOns"] = this.selectedAddOns;
+        data["premium"] = this.premium;
+        data["transactionDateTime"] = this.transactionDateTime ? this.transactionDateTime.toISOString() : <any>undefined;
+        data["address1"] = this.address1;
+        data["address2"] = this.address2;
+        data["postcode"] = this.postcode;
+        data["city"] = this.city;
+        data["state"] = this.state;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Sale {
+        const json = this.toJSON();
+        let result = new Sale();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISale {
+    package: number;
+    selectedPrincipal: number;
+    selectedAddOns: string | undefined;
+    premium: number;
+    transactionDateTime: moment.Moment;
+    address1: string | undefined;
+    address2: string | undefined;
+    postcode: string | undefined;
+    city: string | undefined;
+    state: string | undefined;
+    id: number;
 }
 
 export class IsValidDto implements IIsValidDto {

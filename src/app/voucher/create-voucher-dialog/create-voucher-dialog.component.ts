@@ -142,27 +142,28 @@ implements OnInit {
       if(this.voucherForm.controls.type.value == 'gift'){
         this.voucher.name = this.voucherForm.controls.name.value;
         this.voucher.code = this.voucherForm.controls.code.value;
-        this.voucher.minAmount = this.voucherForm.controls.minimum.value;
+        this.voucher.type = this.voucherForm.controls.type.value;
+        this.voucher.minAmount = Number(this.voucherForm.controls.minimum.value);
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        this.voucher.limit = this.voucherForm.controls.limit.value;
-        this.voucher.type = this.voucherForm.controls.type.value;
-        this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
+        this.voucher.limit = Number(this.voucherForm.controls.limit.value);
+        this.voucher.discountAmount = Number(this.voucherForm.controls.discountAmount.value);
         this.voucher.giftId = this.voucherForm.controls.addon.value;
         this.voucher.isGenerated = false;
       }
       else{
+        this.voucherForm.controls.addon.setValue('0');
         this.voucher.name = this.voucherForm.controls.name.value;
         this.voucher.code = this.voucherForm.controls.code.value;
-        this.voucher.minAmount = this.voucherForm.controls.minimum.value;
+        this.voucher.type = this.voucherForm.controls.type.value;
+        this.voucher.minAmount = Number(this.voucherForm.controls.minimum.value);
         this.voucher.description = this.voucherForm.controls.desc.value;
         this.voucher.startDate = this.vStartDate;
         this.voucher.stopDate = this.vEndDate;
-        this.voucher.limit = this.voucherForm.controls.limit.value;
-        this.voucher.type = this.voucherForm.controls.type.value;
-        this.voucher.discountAmount = this.voucherForm.controls.discountAmount.value;
-        this.voucher.giftId = 0;
+        this.voucher.limit = Number(this.voucherForm.controls.limit.value);
+        this.voucher.discountAmount = Number(this.voucherForm.controls.discountAmount.value);
+        this.voucher.giftId = this.voucherForm.controls.addon.value;
         this.voucher.isGenerated = false;
       }
 
