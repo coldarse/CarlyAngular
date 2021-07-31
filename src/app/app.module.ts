@@ -40,7 +40,7 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, GeneratedVoucherServiceProxy, PackageServiceProxy, PrincipalServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, GeneratedVoucherServiceProxy, PackageServiceProxy, PrincipalServiceProxy, SaleServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreatePrincipalDialogComponent } from './principal/create-principal-dialog/create-principal-dialog.component';
 import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/edit-principal-dialog.component';
 import { CreateVoucherDialogComponent } from './voucher/create-voucher-dialog/create-voucher-dialog.component';
@@ -53,7 +53,11 @@ import { AddPackagePrincipalComponent } from './package/add-package-principal/ad
 import { EditPackagePrincipalComponent } from './package/edit-package-principal/edit-package-principal.component';
 
 import { AddOnChecked } from './model/AddOnChecked';
-import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher.component'
+import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher.component';
+import { GenerateLinkDialogComponent } from './package/generate-link-dialog/generate-link-dialog.component';
+import { GenerateEmailDialogComponent } from './package/generate-email-dialog/generate-email-dialog.component'
+import { ClipboardModule } from 'ngx-clipboard';
+import { SaleComponent } from './sale/sale.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +99,10 @@ import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher
     EditPackageDialogComponent,
     AddPackagePrincipalComponent,
     EditPackagePrincipalComponent,
-    GeneratedVoucherComponent
+    GeneratedVoucherComponent,
+    GenerateLinkDialogComponent,
+    GenerateEmailDialogComponent,
+    SaleComponent
   ],
   imports: [
     CommonModule,
@@ -112,7 +119,7 @@ import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher
     SharedModule,
     NgxPaginationModule,
     NgbDatepickerModule,
-
+    ClipboardModule,
   ],
   providers: [
     PrincipalServiceProxy,
@@ -122,7 +129,8 @@ import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher
     CustomerPrincipalServiceProxy,
     CustomerAddOnServiceProxy,
     AddOnChecked,
-    GeneratedVoucherServiceProxy
+    GeneratedVoucherServiceProxy,
+    SaleServiceProxy,
   ],
   entryComponents: [
     // tenants

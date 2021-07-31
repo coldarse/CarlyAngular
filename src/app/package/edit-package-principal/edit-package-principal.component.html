@@ -35,7 +35,7 @@
     </div>
     <div class="form-group row required" [hidden]="deleteDisabled">
       <label class="col-md-3 col-form-label" for="prindesc">
-        {{ "PrincipalDescription" | localize }}
+        {{ "PrincipalDesc" | localize }}
       </label>
       <div class="col-md-9">
           <textarea 
@@ -81,7 +81,7 @@
             <div *ngIf="ao.checked" [formGroupName]="i">
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="addonname">
-                      {{ "AddOnName" | localize }}
+                      {{ "AddOn" | localize }}
                     </label>
                     <div class="col-md-9">
                         <input
@@ -98,7 +98,7 @@
                 </div>
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="desc">
-                      {{ "AddOnDesc" | localize }}
+                      {{ "Description" | localize }}
                     </label>
                     <div class="col-md-9">
                       <textarea 
@@ -116,7 +116,7 @@
                 </div>
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="price">
-                      {{ "AddOnPrice" | localize }}
+                      {{ "Price" | localize }}
                     </label>
                     <div class="col-md-9">
                         <input

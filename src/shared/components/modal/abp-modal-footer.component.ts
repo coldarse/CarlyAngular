@@ -18,8 +18,13 @@ export class AbpModalFooterComponent extends AppComponentBase {
   @Input() cancelDisabled: boolean;
   @Input() saveLabel = this.l('Save');
   @Input() saveDisabled: boolean;
+  @Input() saveHidden: boolean = false;
+  @Input() cancelHidden: boolean = false;
+  @Input() email = this.l('email');
+  @Input() emailHidden: boolean = true;
 
   @Output() onCancelClick = new EventEmitter<number>();
+  @Output() onEmailClick = new EventEmitter<number>();
 
   constructor(injector: Injector) {
     super(injector);

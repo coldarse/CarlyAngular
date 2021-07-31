@@ -91,6 +91,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-cogs',
                 'Pages.GeneratedVouchers'
             ),
+            new MenuItem(
+                this.l('Sales'),
+                '/app/sales',
+                'fas fa-store',
+                'Pages.Sales'
+            ),
         ];
     }
 

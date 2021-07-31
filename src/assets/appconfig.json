@@ -1,5 +1,5 @@
 {
-  "remoteServiceBaseUrl": "https://system.carly.com.my:5000/CarlyAPI",
+  "remoteServiceBaseUrl": "http://localhost:21021",
   "appBaseUrl": "http://localhost:4200",
   "localeMappings": [
     {

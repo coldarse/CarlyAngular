@@ -1,0 +1,37 @@
+<!-- <input type="text" id="link" name="genLink" readonly> -->
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  [formGroup] ="linkForm"
+  *ngIf="showLink"
+>
+  <abp-modal-header
+    [title]="'GenLink' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="link">
+        {{ "Link" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="link"
+          id="link"
+          readonly
+          formControlName="link"
+        />
+      </div>
+      <div class="col-md-1">
+        <i class="btn btn-light far fa-copy" (click)="copyToClip()" style="cursor: pointer"></i>
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer
+    [cancelHidden]="true"
+    [saveHidden]="true"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

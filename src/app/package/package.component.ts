@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, Injector, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { CustomerPrincipalDto, CustomerPrincipalServiceProxy, Package, PackageDto, PackageDtoPagedResultDto, PackageServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddOnDto, CustomerPrincipalDto, CustomerPrincipalServiceProxy, Package, PackageDto, PackageDtoPagedResultDto, PackageServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { AddPackagePrincipalComponent } from './add-package-principal/add-package-principal.component';
 import { CreatePackageDialogComponent } from './create-package-dialog/create-package-dialog.component';
 import { EditPackageDialogComponent } from './edit-package-dialog/edit-package-dialog.component';
 import { EditPackagePrincipalComponent } from './edit-package-principal/edit-package-principal.component';
+import { GenerateEmailDialogComponent } from './generate-email-dialog/generate-email-dialog.component';
+import { GenerateLinkDialogComponent } from './generate-link-dialog/generate-link-dialog.component';
 
 
 class PagedPackagesRequestDto extends PagedRequestDto{
@@ -90,6 +92,14 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
     this.showCreateOrEditPrincipalDialog(Package.id, false);
   }
 
+  genLink(Package: PackageDto): void {
+    this.showGenLinkOrGenEmailDialog(Package.id, true);
+  }
+
+  email(Package: PackageDto): void {
+    this.showGenLinkOrGenEmailDialog(Package.id, false);
+  }
+
   showCreateOrEditPackageDialog(id?: number): void {
     let createOrEditPackageDialog: BsModalRef;
     if (!id) {
@@ -143,6 +153,33 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
     }
 
     createOrEditPrincipalDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
+
+  showGenLinkOrGenEmailDialog(id: number, add: boolean): void {
+    let genLinkOrgenEmailDialog: BsModalRef;
+    if (add) {
+      genLinkOrgenEmailDialog = this._modalService.show(
+        GenerateLinkDialogComponent,
+        {
+          class: 'modal-lg',
+        }
+      );
+    }
+    else {
+      genLinkOrgenEmailDialog = this._modalService.show(
+        GenerateEmailDialogComponent,
+        {
+          class: 'modal-lg',
+          initialState: {
+            id: id,
+          },
+        }
+      );
+    }
+
+    genLinkOrgenEmailDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }

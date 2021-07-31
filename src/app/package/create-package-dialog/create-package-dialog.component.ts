@@ -49,10 +49,9 @@ implements OnInit {
     try {
       this.saving = true;
 
-      
+      this.packageForm.controls.vehicleRegNo.setValue(this.packageForm.controls.vehicleRegNo.value.toUpperCase());
       this.package = this.packageForm.value;
       this.package.principals = null;
-      console.log(JSON.stringify(this.package));
 
       this._packageService
         .create(this.package)

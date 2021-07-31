@@ -1,0 +1,95 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  [formGroup] ="emailForm"
+  *ngIf="showDetails"
+>
+  <abp-modal-header
+    [title]="'GenEmail' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="emailto">
+        {{ "EmailTo" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="emailto"
+          id="emailto"
+          readonly
+          formControlName="emailto"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="subject">
+          {{ "Subject" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="subject"
+            id="subject"
+            readonly
+            formControlName="subject"
+          />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="ownername">
+          {{ "OwnerName" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="ownername"
+            id="ownername"
+            readonly
+            formControlName="ownername"
+          />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="regno">
+          {{ "VehicleRegNo" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="regno"
+            id="regno"
+            readonly
+            formControlName="regno"
+          />
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="coverageperiod">
+          {{ "PolicyPeriod" | localize }}
+        </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            name="coverageperiod"
+            id="coverageperiod"
+            readonly
+            formControlName="coverageperiod"
+          />
+        </div>
+      </div>
+  </div>
+  <abp-modal-footer
+    [cancelHidden]="true"
+    [saveHidden]="true"
+    [emailHidden]="false"
+    (onCancelClick)="bsModalRef.hide()"
+    (onEmailClick)="email()"
+  ></abp-modal-footer>
+</form>

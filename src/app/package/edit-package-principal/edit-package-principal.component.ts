@@ -105,7 +105,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
     let c = this.customerPrincipal.map((x) => {return x.id.toString()}).indexOf(this.principalForm.controls.name.value.toString());
       
     abp.message.confirm(
-      this.l('PackageDeleteWarningMessage', this.customerPrincipal[c].name),
+      this.l('PrincipalDeleteWarningMessage', this.customerPrincipal[c].name),
       undefined,
       (result: boolean) => {
         if (result) {

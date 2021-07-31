@@ -54,7 +54,7 @@ implements OnInit {
   save(): void {
     try{
       this.saving = true;
-
+      this.packageForm.controls.vehicleRegNo.setValue(this.packageForm.controls.vehicleRegNo.value.toUpperCase());
       this.package = this.packageForm.value;
       this.package.id = this.id;
   
