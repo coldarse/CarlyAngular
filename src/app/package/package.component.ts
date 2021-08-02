@@ -164,6 +164,9 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
         GenerateLinkDialogComponent,
         {
           class: 'modal-lg',
+          initialState: {
+            id: id,
+          }
         }
       );
     }
