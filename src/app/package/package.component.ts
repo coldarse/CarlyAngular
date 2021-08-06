@@ -12,7 +12,7 @@ import { GenerateEmailDialogComponent } from './generate-email-dialog/generate-e
 import { GenerateLinkDialogComponent } from './generate-link-dialog/generate-link-dialog.component';
 
 
-class PagedPackagesRequestDto extends PagedRequestDto{
+class PagedPackageRequestDto extends PagedRequestDto{
   keyword: string;
 }
 
@@ -23,6 +23,7 @@ class PagedPackagesRequestDto extends PagedRequestDto{
 export class PackageComponent extends PagedListingComponentBase<PackageDto> {
 
   packages: PackageDto[] = [];
+  backupPackages: PackageDto[] = [];
   keyword = '';
   packagePrincipals = '';
 
@@ -36,7 +37,7 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
 
 
   list(
-    request: PagedPackagesRequestDto, 
+    request: PagedPackageRequestDto, 
     pageNumber: number, 
     finishedCallback: Function
   ): void {
@@ -51,8 +52,30 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
       )
       .subscribe((result: Package[]) => {
         this.packages = result;
+        this.backupPackages = this.packages;
         //this.showPaging(result, pageNumber);
       });
+  }
+
+  search(){
+    if(this.keyword != ""){
+      this.packages = [];
+
+      this.backupPackages.forEach((element: PackageDto) => {
+        if(element.vehicleRegNo.toLowerCase().includes(this.keyword.toLowerCase())){
+          console.log(element);
+          this.packages.push(element);
+        }
+      });
+
+      if(this.packages.length == 0){
+        this.packages = this.backupPackages;
+      }
+    }
+    else{
+      this.packages = this.backupPackages;
+    }
+    
   }
 
 
@@ -186,5 +209,7 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
       this.refresh();
     });
   }
+
+  
 
 }

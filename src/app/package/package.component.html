@@ -1,6 +1,30 @@
 <div [@routerTransition]>
     <section class="content-header">
-      <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">&emsp;</div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button
+                            type="button"
+                            class="btn bg-blue"
+                            (click)="search()"
+                    >
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="keyword"
+                        [placeholder]="'VehicleRegNo' | localize"
+                        [(ngModel)]="keyword"
+                        (keyup.enter)="search()"
+                />
+            </div>
+        </div>
+    </div>
+      <div class="container-fluid" style="margin-top: 2rem;">
         <div class="row">
           <div class="col-6">
             <h1>{{ "Package" | localize }}</h1>
@@ -27,7 +51,6 @@
                   <tr>
                     <th>{{ "Name" | localize }}</th>
                     <th>{{ "NRIC" | localize }}</th>
-                    <th>{{ "VehicleModel" | localize }}</th>
                     <th>{{ "VehicleRegNo" | localize }}</th>
                     <th>{{ "CoverType" | localize }}</th>
                     <th>{{ "Principals" | localize }}</th>
@@ -47,7 +70,6 @@
                   ">
                   <td>{{ package.ownerName }}</td>
                   <td>{{ package.ownerNRIC }}</td>
-                  <td>{{ package.vehicleModel }}</td>
                   <td>{{ package.vehicleRegNo }}</td>
                   <td>{{ package.coverType }}</td>
                   <td>{{ package.principals == undefined ? 0 : package.principals.length }}</td>
@@ -104,7 +126,7 @@
                   <i class="fas fa-redo-alt"></i>
                 </button>
               </div>
-              <div class="col-sm-4 col-12 text-center">
+              <!-- <div class="col-sm-4 col-12 text-center">
                 <p class="mb-0 my-2">
                   {{ "TotalRecordsCount" | localize: totalItems }}
                 </p>
@@ -115,7 +137,7 @@
                     (pageChange)="getDataPage($event)">
                   </abp-pagination-controls>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

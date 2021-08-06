@@ -44,7 +44,7 @@ implements OnInit {
           ownerPhoneNo: [result.ownerPhoneNo, Validators.required],
           vehicleRegNo: [result.vehicleRegNo, Validators.required],
           coverType: [result.coverType, Validators.required],
-          policyPeriod: [result.coveragePeriod, Validators.required]
+          coveragePeriod: [result.coveragePeriod, Validators.required]
         });
 
         this.showEdit = true;

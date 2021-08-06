@@ -39,7 +39,7 @@ implements OnInit {
       ownerPhoneNo: ['', Validators.required],
       vehicleRegNo: ['', Validators.required],
       coverType: ['', Validators.required],
-      policyPeriod: ['', Validators.required]
+      coveragePeriod: ['', Validators.required]
     });
 
 

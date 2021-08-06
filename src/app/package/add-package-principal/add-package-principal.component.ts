@@ -42,7 +42,7 @@ implements OnInit {
   ngOnInit(): void {
     this.principalForm = this._fb.group({
       name: ['0', Validators.required],
-      prindesc: ['', Validators.required],
+      description: ['', Validators.required],
       premium: ['', Validators.required],
       addOns: this._fb.array([])
     });
@@ -89,7 +89,7 @@ implements OnInit {
       })
     )
     .subscribe((result: Principal) => {
-      this.principalForm.controls.prindesc.setValue(result.description);
+      this.principalForm.controls.description.setValue(result.description);
       if(result.addOns != null){
         result.addOns.forEach((obj) => {
           this.tempaddonChecked.push(new AddOnChecked(obj));
@@ -123,6 +123,13 @@ implements OnInit {
       }
 
       this.principal = this.principalForm.value;
+
+      this.tempprincipal.forEach((prin: PrincipalDto) => {
+        if(prin.id.toString() == this.principal.name){
+          this.principal.name = prin.name;
+        }
+      });
+      
       this.principal.packageId = this.id;
 
       this._customerPrincipalService

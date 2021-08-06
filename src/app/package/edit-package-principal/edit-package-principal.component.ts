@@ -133,6 +133,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.selectedCustomerPrincipal.id = this.principalForm.controls.name.value;
       this.selectedCustomerPrincipal.premium = this.principalForm.controls.premium.value;
       this.selectedCustomerPrincipal.packageId = this.id;
+      this.selectedCustomerPrincipal.description = this.principalForm.controls.prindesc.value;
   
       this.selectedCustomerPrincipal.addOns = [];
       this.principalForm.controls.addOns.value.forEach(element => {
