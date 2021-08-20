@@ -51,6 +51,7 @@
                     <th>{{ "AddOns" | localize }}</th>
                     <th>{{ "Premium" | localize }}</th>
                     <th>{{ "TransactionDateTime" | localize }}</th>
+                    <th>{{ "Voucher" | localize }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -67,6 +68,7 @@
                     <td>{{ sale.AddOns }}</td>
                     <td>{{ sale.Premium | number : '1.2-2' }}</td>
                     <td>{{ sale.TransactionDate | date:'medium' }}</td>
+                    <td>{{ sale.ClaimedVoucher }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -98,7 +100,7 @@
       </div>
     </section>
   </div>
-<!-- 
+<!--
   | paginate
                         : {
                             id: 'server',

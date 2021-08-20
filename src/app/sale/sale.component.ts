@@ -26,13 +26,13 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
     injector: Injector,
     private _saleService: SaleServiceProxy,
     private _packageService: PackageServiceProxy,
-  ) { 
+  ) {
     super(injector)
   }
 
   protected list(
-    request: PagedSalesRequestDto, 
-    pageNumber: number, 
+    request: PagedSalesRequestDto,
+    pageNumber: number,
     finishedCallback: Function
     ): void {
       request.keyword = this.keyword;
@@ -60,11 +60,11 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                       }
                     })
 
-                    let tempAddress = 
+                    let tempAddress =
                       elem.address1 + ", " +
-                      elem.address2 + ", " + 
-                      elem.postcode + ", " + 
-                      elem.city + ", " + 
+                      elem.address2 + ", " +
+                      elem.postcode + ", " +
+                      elem.city + ", " +
                       elem.state
 
                     this.salesTable.push({
@@ -79,6 +79,7 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                       'AddOns': elem.selectedAddOns,
                       'Premium': elem.premium,
                       'TransactionDate': elem.transactionDateTime,
+                      'ClaimedVoucher': elem.claimedVoucher,
                     });
 
                     this.backupSalesTable = this.salesTable;
@@ -117,7 +118,7 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
     else{
       this.salesTable = this.backupSalesTable;
     }
-    
+
   }
 
 }

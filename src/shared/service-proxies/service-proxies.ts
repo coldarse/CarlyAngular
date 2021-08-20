@@ -1846,15 +1846,15 @@ export class PackageServiceProxy {
     }
 
     /**
-     * @param sorting (optional) 
+     * @param keyword (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PackageDtoPagedResultDto> {
+    getAll(keyword: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PackageDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Package/GetAll?";
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -7590,6 +7590,7 @@ export class Sale implements ISale {
     postcode: string | undefined;
     city: string | undefined;
     state: string | undefined;
+    claimedVoucher: string | undefined;
     id: number;
 
     constructor(data?: ISale) {
@@ -7613,6 +7614,7 @@ export class Sale implements ISale {
             this.postcode = _data["postcode"];
             this.city = _data["city"];
             this.state = _data["state"];
+            this.claimedVoucher = _data["claimedVoucher"];
             this.id = _data["id"];
         }
     }
@@ -7636,6 +7638,7 @@ export class Sale implements ISale {
         data["postcode"] = this.postcode;
         data["city"] = this.city;
         data["state"] = this.state;
+        data["claimedVoucher"] = this.claimedVoucher;
         data["id"] = this.id;
         return data; 
     }
@@ -7659,6 +7662,7 @@ export interface ISale {
     postcode: string | undefined;
     city: string | undefined;
     state: string | undefined;
+    claimedVoucher: string | undefined;
     id: number;
 }
 
@@ -7673,6 +7677,7 @@ export class SaleDto implements ISaleDto {
     postcode: string | undefined;
     city: string | undefined;
     state: string | undefined;
+    claimedVoucher: string | undefined;
     id: number;
 
     constructor(data?: ISaleDto) {
@@ -7696,6 +7701,7 @@ export class SaleDto implements ISaleDto {
             this.postcode = _data["postcode"];
             this.city = _data["city"];
             this.state = _data["state"];
+            this.claimedVoucher = _data["claimedVoucher"];
             this.id = _data["id"];
         }
     }
@@ -7719,6 +7725,7 @@ export class SaleDto implements ISaleDto {
         data["postcode"] = this.postcode;
         data["city"] = this.city;
         data["state"] = this.state;
+        data["claimedVoucher"] = this.claimedVoucher;
         data["id"] = this.id;
         return data; 
     }
@@ -7742,6 +7749,7 @@ export interface ISaleDto {
     postcode: string | undefined;
     city: string | undefined;
     state: string | undefined;
+    claimedVoucher: string | undefined;
     id: number;
 }
 

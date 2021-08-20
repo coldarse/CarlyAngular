@@ -151,12 +151,12 @@
         </label>
         <div class="col-md-9">
           <select
-            class="form-control" 
-            name="type" 
+            class="form-control"
+            name="type"
             id="type"
             required
             formControlName="type"
-            (change)="voucherType($event)" 
+            (change)="voucherType($event)"
             >
             <option value="0">{{ "PleaseSelectOne" | localize }}</option>
             <option value="discount">{{ "AmountDiscount" | localize }}</option>
@@ -187,11 +187,11 @@
         </label>
         <div class="col-md-9">
           <select
-            class="form-control" 
-            name="principal" 
+            class="form-control"
+            name="principal"
             id="principal"
             required
-            formControlName="principal" 
+            formControlName="principal"
             (change)="selectedPrincipal($event)"
             >
             <option value="0">{{ "PleaseSelectOne" | localize }}</option>
@@ -205,11 +205,11 @@
         </label>
         <div class="col-md-9">
           <select
-            class="form-control" 
-            name="addon" 
+            class="form-control"
+            name="addon"
             id="addon"
             required
-            formControlName="addon" 
+            formControlName="addon"
             >
             <option value="0">{{ "PleaseSelectOne" | localize }}</option>
             <option value="{{add.id}}" *ngFor="let add of addon">{{ add.addonname }}</option>
@@ -221,5 +221,6 @@
     [cancelDisabled]="saving"
     [saveDisabled]="!voucherForm.valid || saving"
     (onCancelClick)="bsModalRef.hide()"
+    *ngIf="voucher.isGenerated == true? false : true"
      ></abp-modal-footer>
 </form>

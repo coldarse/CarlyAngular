@@ -59,7 +59,8 @@
                       <button type="button"
                         class="btn btn-sm bg-secondary"
                         (click)="editVoucher(voucher)"
-                        *ngIf="!voucher.isGenerated">
+                        >
+                        <!-- *ngIf="!voucher.isGenerated" -->
                         <i class="fas fa-pencil-alt"></i>
                         {{ "Edit" | localize }}
                       </button>

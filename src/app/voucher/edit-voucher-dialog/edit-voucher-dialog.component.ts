@@ -62,24 +62,28 @@ export class EditVoucherDialogComponent extends AppComponentBase
 
         let tempStartDate = {year: year1, month: month1, day: day1};
         let tempStopDate = {year: year2, month: month2, day: day2};
-     
+
         if(this.voucher.giftId == 0){
 
           this.xFreeGift = false;
           this.xDiscount = true;
-          
+
+          let view = false;
+          if(this.voucher.isGenerated){
+            view = true;
+          }
 
           this.voucherForm = this._fb.group({
-            name: [this.voucher.name, Validators.required],
-            code: [this.voucher.code, Validators.required],
-            minimum: [this.voucher.minAmount, Validators.required],
-            desc: [this.voucher.description],
-            startDate: [tempStartDate, Validators.required],
-            endDate: [tempStopDate, Validators.required],
-            enable: [true],
-            limit: [this.voucher.limit],
-            type: [this.voucher.type],
-            discountAmount: [this.voucher.discountAmount],
+            name: [{value: this.voucher.name, disabled: view} , Validators.required],
+            code: [{value: this.voucher.code, disabled: view} , Validators.required],
+            minimum: [{value: this.voucher.minAmount, disabled: view} , Validators.required],
+            desc: [{value: this.voucher.description, disabled: view} ],
+            startDate: [{value: tempStartDate, disabled: view} , Validators.required],
+            endDate: [{value: tempStopDate, disabled: view} , Validators.required],
+            enable: [{value: true, disabled: view} ],
+            limit: [{value: this.voucher.limit, disabled: view} ],
+            type: [{value: this.voucher.type, disabled: view} ],
+            discountAmount: [{value: this.voucher.discountAmount, disabled: view} ],
             principal: ['0'],
             addon: ['0'],
           });
@@ -90,7 +94,7 @@ export class EditVoucherDialogComponent extends AppComponentBase
           .get(this.voucher.giftId)
           .pipe(
             finalize(() => {
-              
+
             })
           )
           .subscribe((result: AddOnDto) =>{
@@ -100,7 +104,7 @@ export class EditVoucherDialogComponent extends AppComponentBase
               .get(this.editAddOn.principalId)
               .pipe(
                 finalize(() => {
-                  
+
                 })
               )
               .subscribe((result: Principal) =>{
@@ -118,20 +122,26 @@ export class EditVoucherDialogComponent extends AppComponentBase
                     this.xFreeGift = true;
                     this.xDiscount = false;
 
+                    let view = false;
+                    if(this.voucher.isGenerated){
+                      view = true;
+                    }
+
                     this.voucherForm = this._fb.group({
-                      name: [this.voucher.name, Validators.required],
-                      code: [this.voucher.code, Validators.required],
-                      minimum: [this.voucher.minAmount, Validators.required],
-                      desc: [this.voucher.description],
-                      startDate: [tempStartDate, Validators.required],
-                      endDate: [tempStopDate, Validators.required],
-                      enable: [true],
-                      limit: [this.voucher.limit],
-                      type: [this.voucher.type],
-                      discountAmount: [this.voucher.discountAmount],
-                      principal: [this.editPrincipal.id],
-                      addon: [this.editAddOn.id],
+                      name: [{value: this.voucher.name, disabled: view} , Validators.required],
+                      code: [{value: this.voucher.code, disabled: view} , Validators.required],
+                      minimum: [{value: this.voucher.minAmount, disabled: view} , Validators.required],
+                      desc: [{value: this.voucher.description, disabled: view} ],
+                      startDate: [{value: tempStartDate, disabled: view} , Validators.required],
+                      endDate: [{value: tempStopDate, disabled: view} , Validators.required],
+                      enable: [{value: true, disabled: view} ],
+                      limit: [{value: this.voucher.limit, disabled: view} ],
+                      type: [{value: this.voucher.type, disabled: view} ],
+                      discountAmount: [{value: this.voucher.discountAmount, disabled: view} ],
+                      principal: [{value: this.editPrincipal.id, disabled: view} ],
+                      addon: [{value: this.editAddOn.id, disabled: view} ],
                     });
+
 
                     this.editVoucherVisible = true;
                   });
@@ -140,8 +150,8 @@ export class EditVoucherDialogComponent extends AppComponentBase
           });
         }
 
-        
-        
+
+
       });
 
 
@@ -155,7 +165,7 @@ export class EditVoucherDialogComponent extends AppComponentBase
         this.principal = result.items;
       });
 
-    
+
   }
 
   onDateSelect1(event) {
@@ -192,7 +202,7 @@ export class EditVoucherDialogComponent extends AppComponentBase
     console.log(year);
     console.log(month);
     console.log(day);
-    
+
     return new Date(finalDate);
   }
 
