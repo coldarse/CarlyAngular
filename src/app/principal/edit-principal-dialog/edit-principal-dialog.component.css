@@ -1,0 +1,8 @@
+.imgContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.logoImg{
+    max-height: 50px;
+}

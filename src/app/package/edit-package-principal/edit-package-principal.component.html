@@ -16,11 +16,11 @@
         </label>
         <div class="col-md-7">
             <select
-              class="form-control" 
-              name="name" 
+              class="form-control"
+              name="name"
               id="name"
               required
-              formControlName="name" 
+              formControlName="name"
               (change)="selectedPrincipal($event)"
               >
               <option value="0">{{ "PleaseSelectOne" | localize }}</option>
@@ -38,7 +38,7 @@
         {{ "PrincipalDesc" | localize }}
       </label>
       <div class="col-md-9">
-          <textarea 
+          <textarea
           class="form-control"
           name="prindesc"
           id="prindesc"
@@ -46,12 +46,12 @@
           maxlength="586"
           required
           formControlName="prindesc"
-          rows="4" 
+          rows="4"
           cols="50">
           </textarea>
       </div>
     </div>
-    <div class="form-group row required" [hidden]="deleteDisabled">
+    <div class="form-group row required" [hidden]="deleteDisabled" style="padding-bottom: 3rem;">
         <label class="col-md-3 col-form-label" for="premium">
           {{ "PremiumAmount" | localize }}
         </label>
@@ -69,15 +69,15 @@
         </div>
     </div>
     <div formArrayName="addOns">
-        <div class="col-md-9" *ngFor="let ao of tempaddonChecked; let i=index">
+        <div class="col-md-9" *ngFor="let ao of tempaddonChecked; let i=index" style="padding-bottom: 3rem;">
             <input
             type="checkbox"
             name="addOnCheckBox"
             id="addOnCheckBox"
             (change)="toggleAddOn($event, i)"
             [checked]="ao.checked"
-            />&nbsp;&nbsp;&nbsp;<strong style="font-size: 1.25rem; padding-top: 3rem;"><u>{{ ao.addonname }}</u></strong>
-    
+            />&nbsp;&nbsp;&nbsp;<strong style="font-size: 1.25rem;"><u>{{ ao.addonname }}</u></strong>
+
             <div *ngIf="ao.checked" [formGroupName]="i">
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="addonname">
@@ -101,7 +101,7 @@
                       {{ "Description" | localize }}
                     </label>
                     <div class="col-md-9">
-                      <textarea 
+                      <textarea
                       class="form-control"
                       name="desc"
                       id="desc"
@@ -109,7 +109,7 @@
                       maxlength="586"
                       required
                       formControlName="desc"
-                      rows="4" 
+                      rows="4"
                       cols="50">
                       </textarea>
                     </div>
@@ -132,9 +132,9 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
-    
+
   </div>
   <abp-modal-footer
     [cancelDisabled]="saving"

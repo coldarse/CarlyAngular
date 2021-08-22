@@ -3,12 +3,33 @@
   autocomplete="off"
   [formGroup] ="principalForm"
   (ngSubmit)="save()"
+  *ngIf="isLoaded"
 >
   <abp-modal-header
     [title]="'CreateNewPrincipal' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="vehicletype">
+        {{ "Type" | localize }}
+      </label>
+      <div class="col-md-9">
+        <select
+          class="form-control"
+          name="vehicletype"
+          id="vehicletype"
+          required
+          formControlName="vehicletype"
+        >
+          <option value="">Please Select A Type</option>
+          <option value="Comprehensive Car">Comprehensive Car</option>
+          <option value="Third Party Fire & Theft Car">Third Party Fire & Theft Car</option>
+          <option value="Comprehensive Motorcycle">Comprehensive Motorcycle</option>
+          <option value="Third Party Fire & Theft Motorcycle">Third Party Fire & Theft Motorcycle</option>
+        </select>
+      </div>
+    </div>
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="name">
         {{ "PrincipalName" | localize }}
@@ -31,7 +52,7 @@
         {{ "PrincipalDesc" | localize }}
       </label>
       <div class="col-md-9">
-        <textarea 
+        <textarea
           class="form-control"
           name="desc"
           id="desc"
@@ -39,14 +60,25 @@
           maxlength="586"
           required
           formControlName="desc"
-          rows="4" 
+          rows="4"
           cols="50">
           </textarea>
       </div>
     </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="imagelink">
+        {{ "PrincipalLogo" | localize }}
+      </label>
+      <div class="col-md-9 imgContainer">
+        <div class="inner" *ngFor="let links of logoLinks;">
+          <input type="radio" id="{{links.id}}" name="imagelink" value="{{links.link}}" (click)="selectedLogo(links)" style="margin-right: 5px">
+          <img class="logoImg" for="{{links.id}}" src="{{links.link}}" alt="{{links.link}}" style="margin-right: 5px">
+        </div>
+      </div>
+    </div>
     <div formArrayName="addOns">
-        <div 
-            *ngFor="let addon of principalForm.controls.addOns['controls']; 
+        <div
+            *ngFor="let addon of principalForm.controls.addOns['controls'];
                     let i=index">
             <div [formGroupName]="i">
                 <div class="form-group row required" >
@@ -76,7 +108,7 @@
                       {{ "Description" | localize }} {{i + 1}}
                   </label>
                   <div class="col-md-7">
-                    <textarea 
+                    <textarea
                     class="form-control"
                     name="desc"
                     id="desc"
@@ -84,7 +116,7 @@
                     maxlength="586"
                     required
                     formControlName="desc"
-                    rows="4" 
+                    rows="4"
                     cols="50">
                     </textarea>
                   </div>

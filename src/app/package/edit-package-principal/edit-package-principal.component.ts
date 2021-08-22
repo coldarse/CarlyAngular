@@ -35,7 +35,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
 
   @Output() onSave = new EventEmitter<any>();
   public principalForm : FormGroup;
-  
+
   ngOnInit(): void {
     this._customerPrincipalService.getSelectedCustomerPrincipal(this.id).subscribe((result: CustomerPrincipalDto[]) => {
       this.customerPrincipal = result;
@@ -43,11 +43,12 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.principalForm = this._fb.group({
         name: ['0', Validators.required],
         prindesc: ['', Validators.required],
+        imagelink: [''],
         premium: ['0', Validators.required],
         addOns: this._fb.array([])
       });
 
-      
+
       this.editCustomerPrincipalVisible = true;
     })
   }
@@ -88,6 +89,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       let c = this.customerPrincipal.map((x) => {return x.id.toString()}).indexOf(event.target.value.toString());
       this.principalForm.controls.premium.setValue(this.customerPrincipal[c].premium);
       this.principalForm.controls.prindesc.setValue(this.customerPrincipal[c].description);
+      this.principalForm.controls.imagelink.setValue(this.customerPrincipal[c].imageLink);
       this.currentPrincipal = this.customerPrincipal[c].id;
 
       this.customerPrincipal[c].addOns.forEach((obj) => {
@@ -103,7 +105,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
 
   removePrincipal(){
     let c = this.customerPrincipal.map((x) => {return x.id.toString()}).indexOf(this.principalForm.controls.name.value.toString());
-      
+
     abp.message.confirm(
       this.l('PrincipalDeleteWarningMessage', this.customerPrincipal[c].name),
       undefined,
@@ -134,7 +136,8 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.selectedCustomerPrincipal.premium = this.principalForm.controls.premium.value;
       this.selectedCustomerPrincipal.packageId = this.id;
       this.selectedCustomerPrincipal.description = this.principalForm.controls.prindesc.value;
-  
+      this.selectedCustomerPrincipal.imageLink = this.principalForm.controls.imagelink.value;
+
       this.selectedCustomerPrincipal.addOns = [];
       this.principalForm.controls.addOns.value.forEach(element => {
         let addon = new CustomerAddOnDto();
@@ -143,13 +146,13 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
         addon.price = element.price;
         addon.customerPrincipalId = this.selectedCustomerPrincipal.id;
         addon.id = element.id;
-  
+
         this.selectedCustomerPrincipal.addOns.push(addon);
       });
 
       const control = <FormArray>this.principalForm.controls['addOns'];
 
-      
+
       let indexes = control.length - 1;
 
       for(let i = indexes; i >= 0; i--){
@@ -180,7 +183,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.saving = false;
       console.log(error.message);
     }
-    
+
   }
 
 }

@@ -40,7 +40,7 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, GeneratedVoucherServiceProxy, PackageServiceProxy, PrincipalServiceProxy, SaleServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddOnServiceProxy, CustomerAddOnServiceProxy, CustomerPrincipalServiceProxy, GeneratedVoucherServiceProxy, LogoLinkServiceProxy, PackageServiceProxy, PrincipalServiceProxy, SaleServiceProxy, VoucherServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreatePrincipalDialogComponent } from './principal/create-principal-dialog/create-principal-dialog.component';
 import { EditPrincipalDialogComponent } from './principal/edit-principal-dialog/edit-principal-dialog.component';
 import { CreateVoucherDialogComponent } from './voucher/create-voucher-dialog/create-voucher-dialog.component';
@@ -131,6 +131,7 @@ import { SaleComponent } from './sale/sale.component';
     AddOnChecked,
     GeneratedVoucherServiceProxy,
     SaleServiceProxy,
+    LogoLinkServiceProxy,
   ],
   entryComponents: [
     // tenants

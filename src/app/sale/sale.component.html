@@ -41,34 +41,42 @@
                 [busy]="isTableLoading">
                 <thead class="bg-light">
                   <tr>
+
+                    <th>{{ "VehicleRegNo" | localize }}</th>
                     <th>{{ "OwnerName" | localize }}</th>
                     <th>{{ "OwnerNRIC" | localize }}</th>
-                    <th>{{ "VehicleRegNo" | localize }}</th>
-                    <th>{{ "OwnerEmail" | localize }}</th>
                     <th>{{ "OwnerPhoneNo" | localize }}</th>
+                    <th>{{ "OwnerEmail" | localize }}</th>
                     <th>{{ "Address" | localize }}</th>
                     <th>{{ "Principal" | localize }}</th>
                     <th>{{ "AddOns" | localize }}</th>
                     <th>{{ "Premium" | localize }}</th>
+                    <th>{{ "PolicyDuration" | localize }}</th>
                     <th>{{ "TransactionDateTime" | localize }}</th>
+                    <th>{{ "InvoiceNumber" | localize }}</th>
                     <th>{{ "Voucher" | localize }}</th>
+
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="
                     let sale of salesTable
                   ">
+
+                    <td>{{ sale.VehicleReg }}</td>
                     <td>{{ sale.Name }}</td>
                     <td>{{ sale.NRIC }}</td>
-                    <td>{{ sale.VehicleReg }}</td>
-                    <td>{{ sale.Email }}</td>
                     <td>{{ sale.Phone }}</td>
+                    <td>{{ sale.Email }}</td>
                     <td>{{ sale.Address }}</td>
                     <td>{{ sale.Principal }}</td>
                     <td>{{ sale.AddOns }}</td>
                     <td>{{ sale.Premium | number : '1.2-2' }}</td>
+                    <td>{{ sale.Policy }}</td>
                     <td>{{ sale.TransactionDate | date:'medium' }}</td>
+                    <td>{{ sale.Invoice}}</td>
                     <td>{{ sale.ClaimedVoucher }}</td>
+
                   </tr>
                 </tbody>
               </table>

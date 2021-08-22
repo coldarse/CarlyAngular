@@ -3,6 +3,7 @@
   autocomplete="off"
   [formGroup] ="principalForm"
   (ngSubmit)="save()"
+  *ngIf="isLoaded"
 >
   <abp-modal-header
     [title]="'AddCustomerPrincipal' | localize"
@@ -15,11 +16,11 @@
         </label>
         <div class="col-md-9">
             <select
-              class="form-control" 
-              name="name" 
+              class="form-control"
+              name="name"
               id="name"
               required
-              formControlName="name" 
+              formControlName="name"
               (change)="selectedPrincipal($event)"
               >
               <option value="0">{{ "PleaseSelectOne" | localize }}</option>
@@ -32,7 +33,7 @@
         {{ "PrincipalDesc" | localize }}
       </label>
       <div class="col-md-9">
-          <textarea 
+          <textarea
           class="form-control"
           name="description"
           id="description"
@@ -40,7 +41,7 @@
           maxlength="586"
           required
           formControlName="description"
-          rows="4" 
+          rows="4"
           cols="50">
           </textarea>
       </div>
@@ -70,7 +71,7 @@
             id="addOnCheckBox"
             (change)="toggleAddOn($event, i)"
             />   {{ ao.addonname }}
-    
+
             <div *ngIf="ao.checked" [formGroupName]="i">
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="addonname">
@@ -94,7 +95,7 @@
                       {{ "Description" | localize }}
                     </label>
                     <div class="col-md-9">
-                      <textarea 
+                      <textarea
                       class="form-control"
                       name="desc"
                       id="desc"
@@ -102,7 +103,7 @@
                       maxlength="586"
                       required
                       formControlName="desc"
-                      rows="4" 
+                      rows="4"
                       cols="50">
                       </textarea>
                     </div>
@@ -125,9 +126,9 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
-    
+
   </div>
   <abp-modal-footer
     [cancelDisabled]="saving"

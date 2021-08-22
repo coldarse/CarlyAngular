@@ -80,6 +80,8 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                       'Premium': elem.premium,
                       'TransactionDate': elem.transactionDateTime,
                       'ClaimedVoucher': elem.claimedVoucher,
+                      'Policy': element.coveragePeriod,
+                      'Invoice': 'INV' + idcount.toString().padStart(5, '0')
                     });
 
                     this.backupSalesTable = this.salesTable;

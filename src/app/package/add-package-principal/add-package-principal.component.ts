@@ -6,14 +6,14 @@ import { AddOnDto, CustomerPrincipalDto, CustomerPrincipalServiceProxy, Principa
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
- 
+
 
 @Component({
   selector: 'app-add-package-principal',
   templateUrl: './add-package-principal.component.html',
   styleUrls: ['./add-package-principal.component.css']
 })
-export class AddPackagePrincipalComponent extends AppComponentBase 
+export class AddPackagePrincipalComponent extends AppComponentBase
 implements OnInit {
 
   saving = false;
@@ -25,6 +25,8 @@ implements OnInit {
   tempaddon : AddOnDto[] = [];
 
   tempaddonChecked: AddOnChecked[] = [];
+
+  isLoaded = false;
 
   constructor(
     injector: Injector,
@@ -38,11 +40,12 @@ implements OnInit {
 
   @Output() onSave = new EventEmitter<any>();
 
-  
+
   ngOnInit(): void {
     this.principalForm = this._fb.group({
       name: ['0', Validators.required],
       description: ['', Validators.required],
+      imagelink: [''],
       premium: ['', Validators.required],
       addOns: this._fb.array([])
     });
@@ -54,12 +57,30 @@ implements OnInit {
       })
     )
     .subscribe((result: PrincipalDtoPagedResultDto) => {
-      this.tempprincipal = result.items;
+      //this.tempprincipal = result.items;
+      this._customerPrincipalService.getSelectedCustomerPrincipal(this.id).subscribe((result1: CustomerPrincipalDto[]) => {
+        result.items.forEach((elem: PrincipalDto) => {
+          if(!this.containsObject(elem, result1)){
+            this.tempprincipal.push(elem);
+          }
+        });
+        this.isLoaded = true;
+      });
+
+
     });
 
   }
 
- 
+  containsObject(obj: PrincipalDto, list: CustomerPrincipalDto[]){
+    var x;
+    for(x in list){
+      if(list.hasOwnProperty(x) && list[x].name === obj.name){
+        return true;
+      }
+    }
+    return false;
+  }
 
 
   initEditAddOn(addon: any){
@@ -79,7 +100,7 @@ implements OnInit {
 
   selectedPrincipal(event: any){
     this.tempaddonChecked = [];
-    
+
     const control = <FormArray>this.principalForm.controls['addOns'];
     control.clear();
     this._principalService
@@ -90,6 +111,7 @@ implements OnInit {
     )
     .subscribe((result: Principal) => {
       this.principalForm.controls.description.setValue(result.description);
+      this.principalForm.controls.imagelink.setValue(result.imageLink);
       if(result.addOns != null){
         result.addOns.forEach((obj) => {
           this.tempaddonChecked.push(new AddOnChecked(obj));
@@ -109,7 +131,7 @@ implements OnInit {
 
       const control = <FormArray>this.principalForm.controls['addOns'];
 
-      
+
       let indexes = control.length - 1;
 
       for(let i = indexes; i >= 0; i--){
@@ -129,7 +151,7 @@ implements OnInit {
           this.principal.name = prin.name;
         }
       });
-      
+
       this.principal.packageId = this.id;
 
       this._customerPrincipalService
