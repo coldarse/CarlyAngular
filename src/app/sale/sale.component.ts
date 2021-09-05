@@ -68,7 +68,7 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                       elem.state
 
                     this.salesTable.push({
-                      'Id': idcount,
+                      'Id': element.id,
                       'Name': element.ownerName,
                       'NRIC': element.ownerNRIC,
                       'VehicleReg': element.vehicleRegNo,
@@ -81,7 +81,7 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                       'TransactionDate': elem.transactionDateTime,
                       'ClaimedVoucher': elem.claimedVoucher,
                       'Policy': element.coveragePeriod,
-                      'Invoice': 'INV' + idcount.toString().padStart(5, '0')
+                      'Invoice': 'INV' + element.id.toString().padStart(5, '0')
                     });
 
                     this.backupSalesTable = this.salesTable;

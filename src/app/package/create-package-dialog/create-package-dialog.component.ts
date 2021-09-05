@@ -10,12 +10,12 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './create-package-dialog.component.html',
   styleUrls: ['./create-package-dialog.component.css']
 })
-export class CreatePackageDialogComponent extends AppComponentBase 
+export class CreatePackageDialogComponent extends AppComponentBase
 implements OnInit {
   saving = false;
   package = new PackageDto();
 
-  
+
 
   public packageForm : FormGroup;
 
@@ -31,7 +31,7 @@ implements OnInit {
   @Output() onSave = new EventEmitter<any>();
 
   ngOnInit(): void {
-    
+
     this.packageForm = this._fb.group({
       ownerName: ['', Validators.required],
       ownerNRIC: ['', Validators.required],
@@ -39,7 +39,10 @@ implements OnInit {
       ownerPhoneNo: ['', Validators.required],
       vehicleRegNo: ['', Validators.required],
       coverType: ['', Validators.required],
-      coveragePeriod: ['', Validators.required]
+      coveragePeriod: ['', Validators.required],
+      roadtax: ['', Validators.required],
+      delivery: ['', Validators.required],
+      adminFee: ['', Validators.required],
     });
 
 

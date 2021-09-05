@@ -51,7 +51,24 @@
           </textarea>
       </div>
     </div>
-    <div class="form-group row required" [hidden]="deleteDisabled" style="padding-bottom: 3rem;">
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="sumInsured">
+        {{ "SumInsured" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="sumInsured"
+          id="sumInsured"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="sumInsured"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
         <label class="col-md-3 col-form-label" for="premium">
           {{ "PremiumAmount" | localize }}
         </label>
@@ -67,6 +84,114 @@
             formControlName="premium"
             />
         </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="loading1">
+        {{ "Loading1" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="loading1"
+          id="loading1"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="loading1"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="loading2">
+        {{ "Loading2" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="loading2"
+          id="loading2"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="loading2"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="excess">
+        {{ "Excess" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="excess"
+          id="excess"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="excess"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="ncda">
+        {{ "NCDAmount" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="ncda"
+          id="ncda"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="ncda"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled">
+      <label class="col-md-3 col-form-label" for="ncdp">
+        {{ "NCDPercentage" | localize }}
+      </label>
+      <div class="col-md-9">
+          <input
+          type="text"
+          class="form-control"
+          name="ncdp"
+          id="ncdp"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="ncdp"
+          />
+      </div>
+    </div>
+    <div class="form-group row required" [hidden]="deleteDisabled"  style="padding-bottom: 3rem;">
+      <label class="col-md-3 col-form-label" for="grossPremium">
+        {{ "GrossPremium" | localize }}
+      </label>
+      <div class="col-md-7">
+          <input
+          type="number"
+          class="form-control"
+          name="grossPremium"
+          id="grossPremium"
+          minlength="1"
+          maxlength="128"
+          required
+          formControlName="grossPremium"
+          style="font-weight: bold;"
+          />
+      </div>
+      <div class="btn btn-success col-md-2">
+        <a (click)="calculate()" style="cursor: pointer">
+            Calculate
+        </a>
+      </div>
     </div>
     <div formArrayName="addOns">
         <div class="col-md-9" *ngFor="let ao of tempaddonChecked; let i=index" style="padding-bottom: 3rem;">

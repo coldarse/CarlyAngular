@@ -43,8 +43,15 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.principalForm = this._fb.group({
         name: ['0', Validators.required],
         prindesc: ['', Validators.required],
+        sumInsured: ['', Validators.required],
         imagelink: [''],
         premium: ['0', Validators.required],
+        loading1: ['', Validators.required],
+        loading2: ['', Validators.required],
+        excess: ['', Validators.required],
+        ncda: ['', Validators.required],
+        ncdp: ['', Validators.required],
+        grossPremium: [{value: '', disabled: true}, Validators.required],
         addOns: this._fb.array([])
       });
 
@@ -90,6 +97,15 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.principalForm.controls.premium.setValue(this.customerPrincipal[c].premium);
       this.principalForm.controls.prindesc.setValue(this.customerPrincipal[c].description);
       this.principalForm.controls.imagelink.setValue(this.customerPrincipal[c].imageLink);
+
+      this.principalForm.controls.sumInsured.setValue(this.customerPrincipal[c].sumInsured);
+      this.principalForm.controls.loading1.setValue(this.customerPrincipal[c].loading1);
+      this.principalForm.controls.loading2.setValue(this.customerPrincipal[c].loading2);
+      this.principalForm.controls.excess.setValue(this.customerPrincipal[c].excess);
+      this.principalForm.controls.ncda.setValue(this.customerPrincipal[c].ncda);
+      this.principalForm.controls.ncdp.setValue(this.customerPrincipal[c].ncdp);
+      this.principalForm.controls.grossPremium.setValue(this.customerPrincipal[c].grossPremium);
+
       this.currentPrincipal = this.customerPrincipal[c].id;
 
       this.customerPrincipal[c].addOns.forEach((obj) => {
@@ -125,6 +141,17 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
     );
   }
 
+  calculate(){
+    let basicpremium = Number(this.principalForm.controls.premium.value);
+    let loading_1 = Number(this.principalForm.controls.loading1.value);
+    let loading_2 = Number(this.principalForm.controls.loading2.value);
+    let excess = Number(this.principalForm.controls.excess.value);
+    let ncd = Number(this.principalForm.controls.ncda.value);
+
+    let gross = basicpremium + loading_1 + loading_2 + excess - ncd;
+    this.principalForm.controls.grossPremium.setValue(gross);
+  }
+
 
   save(): void {
     try{
@@ -137,6 +164,17 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.selectedCustomerPrincipal.packageId = this.id;
       this.selectedCustomerPrincipal.description = this.principalForm.controls.prindesc.value;
       this.selectedCustomerPrincipal.imageLink = this.principalForm.controls.imagelink.value;
+
+      this.calculate();
+      this.principalForm.controls.grossPremium.enable();
+      this.selectedCustomerPrincipal.sumInsured = this.principalForm.controls.sumInsured.value;
+      this.selectedCustomerPrincipal.loading1 = this.principalForm.controls.loading1.value;
+      this.selectedCustomerPrincipal.loading2 = this.principalForm.controls.loading2.value;
+      this.selectedCustomerPrincipal.excess = this.principalForm.controls.excess.value;
+      this.selectedCustomerPrincipal.ncda = this.principalForm.controls.ncda.value;
+      this.selectedCustomerPrincipal.ncdp = this.principalForm.controls.ncdp.value;
+      this.selectedCustomerPrincipal.grossPremium = this.principalForm.controls.grossPremium.value;
+      this.principalForm.controls.grossPremium.disable();
 
       this.selectedCustomerPrincipal.addOns = [];
       this.principalForm.controls.addOns.value.forEach(element => {

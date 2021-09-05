@@ -26,7 +26,7 @@ implements OnInit {
   ) {
     super(injector);
   }
-  
+
 
   ngOnInit(): void {
 
@@ -44,7 +44,10 @@ implements OnInit {
           ownerPhoneNo: [result.ownerPhoneNo, Validators.required],
           vehicleRegNo: [result.vehicleRegNo, Validators.required],
           coverType: [result.coverType, Validators.required],
-          coveragePeriod: [result.coveragePeriod, Validators.required]
+          coveragePeriod: [result.coveragePeriod, Validators.required],
+          roadtax: [result.roadtax, Validators.required],
+          delivery: [result.delivery, Validators.required],
+          adminFee: [result.adminFee, Validators.required],
         });
 
         this.showEdit = true;
@@ -57,7 +60,7 @@ implements OnInit {
       this.packageForm.controls.vehicleRegNo.setValue(this.packageForm.controls.vehicleRegNo.value.toUpperCase());
       this.package = this.packageForm.value;
       this.package.id = this.id;
-  
+
       this._packageService
         .update(this.package)
         .pipe(
@@ -74,7 +77,7 @@ implements OnInit {
       this.saving = false;
       console.log(error.message);
     }
-    
+
   }
 
 }

@@ -45,8 +45,15 @@ implements OnInit {
     this.principalForm = this._fb.group({
       name: ['0', Validators.required],
       description: ['', Validators.required],
+      sumInsured: ['', Validators.required],
       imagelink: [''],
       premium: ['', Validators.required],
+      loading1: ['', Validators.required],
+      loading2: ['', Validators.required],
+      excess: ['', Validators.required],
+      ncda: ['', Validators.required],
+      ncdp: ['', Validators.required],
+      grossPremium: [{value: '', disabled: true}, Validators.required],
       addOns: this._fb.array([])
     });
 
@@ -82,6 +89,16 @@ implements OnInit {
     return false;
   }
 
+  calculate(){
+    let basicpremium = Number(this.principalForm.controls.premium.value);
+    let loading_1 = Number(this.principalForm.controls.loading1.value);
+    let loading_2 = Number(this.principalForm.controls.loading2.value);
+    let excess = Number(this.principalForm.controls.excess.value);
+    let ncd = Number(this.principalForm.controls.ncda.value);
+
+    let gross = basicpremium + loading_1 + loading_2 + excess - ncd;
+    this.principalForm.controls.grossPremium.setValue(gross);
+  }
 
   initEditAddOn(addon: any){
     return this._fb.group({
@@ -144,7 +161,12 @@ implements OnInit {
         ((this.principalForm.get('addOns') as FormArray).at(j) as FormGroup).removeControl('checked');
       }
 
+      this.calculate();
+      this.principalForm.controls.grossPremium.enable();
+      this.principal.grossPremium = this.principalForm.controls.grossPremium.value;
       this.principal = this.principalForm.value;
+
+      this.principalForm.controls.grossPremium.disable();
 
       this.tempprincipal.forEach((prin: PrincipalDto) => {
         if(prin.id.toString() == this.principal.name){

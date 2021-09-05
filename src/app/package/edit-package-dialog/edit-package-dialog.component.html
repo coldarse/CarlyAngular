@@ -132,6 +132,57 @@
         />
       </div>
     </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="roadtax">
+        {{ "Roadtax" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="roadtax"
+          id="roadtax"
+          minlength="1"
+          maxlength="125"
+          required
+          formControlName="roadtax"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="delivery">
+        {{ "Delivery" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="delivery"
+          id="delivery"
+          minlength="1"
+          maxlength="125"
+          required
+          formControlName="delivery"
+        />
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="adminFee">
+        {{ "AdminFree" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="adminFee"
+          id="adminFee"
+          minlength="1"
+          maxlength="125"
+          required
+          formControlName="adminFee"
+        />
+      </div>
+    </div>
   </div>
   <abp-modal-footer
     [cancelDisabled]="saving"

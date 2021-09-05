@@ -6468,6 +6468,13 @@ export class CustomerPrincipal implements ICustomerPrincipal {
     premium: number;
     addOns: CustomerAddOn[] | undefined;
     packageId: number;
+    loading1: number;
+    loading2: number;
+    excess: number;
+    ncda: number;
+    ncdp: number;
+    sumInsured: number;
+    grossPremium: number;
     id: number;
 
     constructor(data?: ICustomerPrincipal) {
@@ -6491,6 +6498,13 @@ export class CustomerPrincipal implements ICustomerPrincipal {
                     this.addOns.push(CustomerAddOn.fromJS(item));
             }
             this.packageId = _data["packageId"];
+            this.loading1 = _data["loading1"];
+            this.loading2 = _data["loading2"];
+            this.excess = _data["excess"];
+            this.ncda = _data["ncda"];
+            this.ncdp = _data["ncdp"];
+            this.sumInsured = _data["sumInsured"];
+            this.grossPremium = _data["grossPremium"];
             this.id = _data["id"];
         }
     }
@@ -6514,6 +6528,13 @@ export class CustomerPrincipal implements ICustomerPrincipal {
                 data["addOns"].push(item.toJSON());
         }
         data["packageId"] = this.packageId;
+        data["loading1"] = this.loading1;
+        data["loading2"] = this.loading2;
+        data["excess"] = this.excess;
+        data["ncda"] = this.ncda;
+        data["ncdp"] = this.ncdp;
+        data["sumInsured"] = this.sumInsured;
+        data["grossPremium"] = this.grossPremium;
         data["id"] = this.id;
         return data; 
     }
@@ -6533,6 +6554,13 @@ export interface ICustomerPrincipal {
     premium: number;
     addOns: CustomerAddOn[] | undefined;
     packageId: number;
+    loading1: number;
+    loading2: number;
+    excess: number;
+    ncda: number;
+    ncdp: number;
+    sumInsured: number;
+    grossPremium: number;
     id: number;
 }
 
@@ -6543,6 +6571,13 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
     premium: number;
     addOns: CustomerAddOnDto[] | undefined;
     packageId: number;
+    loading1: number;
+    loading2: number;
+    excess: number;
+    ncda: number;
+    ncdp: number;
+    sumInsured: number;
+    grossPremium: number;
     id: number;
 
     constructor(data?: ICustomerPrincipalDto) {
@@ -6566,6 +6601,13 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
                     this.addOns.push(CustomerAddOnDto.fromJS(item));
             }
             this.packageId = _data["packageId"];
+            this.loading1 = _data["loading1"];
+            this.loading2 = _data["loading2"];
+            this.excess = _data["excess"];
+            this.ncda = _data["ncda"];
+            this.ncdp = _data["ncdp"];
+            this.sumInsured = _data["sumInsured"];
+            this.grossPremium = _data["grossPremium"];
             this.id = _data["id"];
         }
     }
@@ -6589,6 +6631,13 @@ export class CustomerPrincipalDto implements ICustomerPrincipalDto {
                 data["addOns"].push(item.toJSON());
         }
         data["packageId"] = this.packageId;
+        data["loading1"] = this.loading1;
+        data["loading2"] = this.loading2;
+        data["excess"] = this.excess;
+        data["ncda"] = this.ncda;
+        data["ncdp"] = this.ncdp;
+        data["sumInsured"] = this.sumInsured;
+        data["grossPremium"] = this.grossPremium;
         data["id"] = this.id;
         return data; 
     }
@@ -6608,6 +6657,13 @@ export interface ICustomerPrincipalDto {
     premium: number;
     addOns: CustomerAddOnDto[] | undefined;
     packageId: number;
+    loading1: number;
+    loading2: number;
+    excess: number;
+    ncda: number;
+    ncdp: number;
+    sumInsured: number;
+    grossPremium: number;
     id: number;
 }
 
@@ -6949,6 +7005,9 @@ export class Package implements IPackage {
     coveragePeriod: string | undefined;
     principals: CustomerPrincipal[] | undefined;
     status: string | undefined;
+    roadtax: number;
+    delivery: number;
+    adminFee: number;
     id: number;
 
     constructor(data?: IPackage) {
@@ -6977,6 +7036,9 @@ export class Package implements IPackage {
                     this.principals.push(CustomerPrincipal.fromJS(item));
             }
             this.status = _data["status"];
+            this.roadtax = _data["roadtax"];
+            this.delivery = _data["delivery"];
+            this.adminFee = _data["adminFee"];
             this.id = _data["id"];
         }
     }
@@ -7005,6 +7067,9 @@ export class Package implements IPackage {
                 data["principals"].push(item.toJSON());
         }
         data["status"] = this.status;
+        data["roadtax"] = this.roadtax;
+        data["delivery"] = this.delivery;
+        data["adminFee"] = this.adminFee;
         data["id"] = this.id;
         return data; 
     }
@@ -7029,6 +7094,9 @@ export interface IPackage {
     coveragePeriod: string | undefined;
     principals: CustomerPrincipal[] | undefined;
     status: string | undefined;
+    roadtax: number;
+    delivery: number;
+    adminFee: number;
     id: number;
 }
 
@@ -7119,6 +7187,9 @@ export class PackageDto implements IPackageDto {
     coveragePeriod: string | undefined;
     principals: CustomerPrincipalDto[] | undefined;
     status: string | undefined;
+    roadtax: number;
+    delivery: number;
+    adminFee: number;
     id: number;
 
     constructor(data?: IPackageDto) {
@@ -7147,6 +7218,9 @@ export class PackageDto implements IPackageDto {
                     this.principals.push(CustomerPrincipalDto.fromJS(item));
             }
             this.status = _data["status"];
+            this.roadtax = _data["roadtax"];
+            this.delivery = _data["delivery"];
+            this.adminFee = _data["adminFee"];
             this.id = _data["id"];
         }
     }
@@ -7175,6 +7249,9 @@ export class PackageDto implements IPackageDto {
                 data["principals"].push(item.toJSON());
         }
         data["status"] = this.status;
+        data["roadtax"] = this.roadtax;
+        data["delivery"] = this.delivery;
+        data["adminFee"] = this.adminFee;
         data["id"] = this.id;
         return data; 
     }
@@ -7199,6 +7276,9 @@ export interface IPackageDto {
     coveragePeriod: string | undefined;
     principals: CustomerPrincipalDto[] | undefined;
     status: string | undefined;
+    roadtax: number;
+    delivery: number;
+    adminFee: number;
     id: number;
 }
 
