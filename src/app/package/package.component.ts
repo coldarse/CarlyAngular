@@ -37,8 +37,8 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
 
 
   list(
-    request: PagedPackageRequestDto, 
-    pageNumber: number, 
+    request: PagedPackageRequestDto,
+    pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
@@ -55,6 +55,16 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
         this.backupPackages = this.packages;
         //this.showPaging(result, pageNumber);
       });
+  }
+
+  isFourteenDays(date: string) : boolean {
+    var diff = Math.abs(new Date().getTime() - new Date(date).getTime());
+    var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    if(diffDays >= 14){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   search(){
@@ -75,7 +85,7 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
     else{
       this.packages = this.backupPackages;
     }
-    
+
   }
 
 
@@ -116,11 +126,15 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
   }
 
   genLink(Package: PackageDto): void {
-    this.showGenLinkOrGenEmailDialog(Package.id, true);
+    this.showGenLinkOrGenEmailDialog(Package.id, true, false);
   }
 
   email(Package: PackageDto): void {
-    this.showGenLinkOrGenEmailDialog(Package.id, false);
+    this.showGenLinkOrGenEmailDialog(Package.id, false, false);
+  }
+
+  emailReminder(Package: PackageDto): void {
+    this.showGenLinkOrGenEmailDialog(Package.id, false, true);
   }
 
   showCreateOrEditPackageDialog(id?: number): void {
@@ -180,7 +194,7 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
     });
   }
 
-  showGenLinkOrGenEmailDialog(id: number, add: boolean): void {
+  showGenLinkOrGenEmailDialog(id: number, add: boolean, reminder: boolean): void {
     let genLinkOrgenEmailDialog: BsModalRef;
     if (add) {
       genLinkOrgenEmailDialog = this._modalService.show(
@@ -200,6 +214,7 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
           class: 'modal-lg',
           initialState: {
             id: id,
+            reminder: reminder
           },
         }
       );
@@ -210,6 +225,6 @@ export class PackageComponent extends PagedListingComponentBase<PackageDto> {
     });
   }
 
-  
+
 
 }

@@ -7,6 +7,12 @@
   <abp-modal-header
     [title]="'GenEmail' | localize"
     (onCloseClick)="bsModalRef.hide()"
+    *ngIf="!reminder"
+  ></abp-modal-header>
+  <abp-modal-header
+    [title]="'GenEmailReminder' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+    *ngIf="reminder"
   ></abp-modal-header>
   <div class="modal-body">
     <div class="form-group row required">

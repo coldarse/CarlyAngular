@@ -54,7 +54,7 @@
                     <th>{{ "VehicleRegNo" | localize }}</th>
                     <th>{{ "CoverType" | localize }}</th>
                     <th>{{ "Principals" | localize }}</th>
-                    <th style="width: 700px;">{{ "Actions" | localize }}</th>
+                    <th style="width: 900px;">{{ "Actions" | localize }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -105,6 +105,13 @@
                         (click)="email(package)">
                         <i class="far fa-envelope-open"></i>
                         {{ "GenEmail" | localize }}
+                      </button>
+                      <button type="button"
+                        class="btn btn-sm bg-warning mx-1"
+                        *ngIf="isFourteenDays(package.status)"
+                        (click)="emailReminder(package)">
+                        <i class="far fa-envelope-open"></i>
+                        {{ "GenEmailReminder" | localize }}
                       </button>
                       <button type="button"
                         class="btn btn-sm bg-danger mx-1"

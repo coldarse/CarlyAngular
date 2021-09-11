@@ -10,7 +10,26 @@
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
-    <div class="form-group row required">
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="vehicletype">
+        {{ "Type" | localize }}
+      </label>
+      <div class="col-md-9">
+        <select
+          class="form-control"
+          name="vehicletype"
+          id="vehicletype"
+          (change)="selectType($event)"
+        >
+          <option value="">Please Select A Type</option>
+          <option value="Comprehensive Car">Comprehensive Car</option>
+          <option value="Third Party Fire & Theft Car">Third Party Fire & Theft Car</option>
+          <option value="Comprehensive Motorcycle">Comprehensive Motorcycle</option>
+          <option value="Third Party Fire & Theft Motorcycle">Third Party Motorcycle</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row required" *ngIf="selectedType">
         <label class="col-md-3 col-form-label" for="name">
           {{ "PrincipalName" | localize }}
         </label>
@@ -24,11 +43,11 @@
               (change)="selectedPrincipal($event)"
               >
               <option value="0">{{ "PleaseSelectOne" | localize }}</option>
-              <option value="{{prin.id}}" *ngFor="let prin of tempprincipal">{{ prin.name }}</option>
+              <option value="{{prin.id}}" *ngFor="let prin of tempprincipaldisplay">{{ prin.name }}</option>
             </select>
         </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="description">
         {{ "PrincipalDesc" | localize }}
       </label>
@@ -46,7 +65,7 @@
           </textarea>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="sumInsured">
         {{ "SumInsured" | localize }}
       </label>
@@ -63,7 +82,7 @@
           />
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
         <label class="col-md-3 col-form-label" for="premium">
           {{ "PremiumAmount" | localize }}
         </label>
@@ -80,7 +99,7 @@
             />
         </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="loading1">
         {{ "Loading1" | localize }}
       </label>
@@ -97,7 +116,7 @@
           />
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="loading2">
         {{ "Loading2" | localize }}
       </label>
@@ -114,7 +133,7 @@
           />
       </div>
     </div>
-    <div class="form-group row required">
+    <!-- <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="excess">
         {{ "Excess" | localize }}
       </label>
@@ -130,8 +149,8 @@
           formControlName="excess"
           />
       </div>
-    </div>
-    <div class="form-group row required">
+    </div> -->
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="ncda">
         {{ "NCDAmount" | localize }}
       </label>
@@ -148,7 +167,7 @@
           />
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="ncdp">
         {{ "NCDPercentage" | localize }}
       </label>
@@ -165,7 +184,7 @@
           />
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="form-group row required" *ngIf="selectedType">
       <label class="col-md-3 col-form-label" for="grossPremium">
         {{ "GrossPremium" | localize }}
       </label>
@@ -188,7 +207,7 @@
         </a>
       </div>
     </div>
-    <div formArrayName="addOns">
+    <div formArrayName="addOns" *ngIf="selectedType">
         <div class="col-md-9" *ngFor="let ao of tempaddonChecked; let i=index">
             <input
             type="checkbox"

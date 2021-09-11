@@ -48,7 +48,7 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
         premium: ['0', Validators.required],
         loading1: ['', Validators.required],
         loading2: ['', Validators.required],
-        excess: ['', Validators.required],
+        excess: [0],
         ncda: ['', Validators.required],
         ncdp: ['', Validators.required],
         grossPremium: [{value: '', disabled: true}, Validators.required],

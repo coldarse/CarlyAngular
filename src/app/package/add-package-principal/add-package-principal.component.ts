@@ -22,11 +22,14 @@ implements OnInit {
   id: number
 
   tempprincipal : PrincipalDto[] = [];
+  tempprincipaldisplay : PrincipalDto[] = [];
   tempaddon : AddOnDto[] = [];
 
   tempaddonChecked: AddOnChecked[] = [];
 
   isLoaded = false;
+
+  selectedType = false;
 
   constructor(
     injector: Injector,
@@ -50,7 +53,7 @@ implements OnInit {
       premium: ['', Validators.required],
       loading1: ['', Validators.required],
       loading2: ['', Validators.required],
-      excess: ['', Validators.required],
+      excess: [0],
       ncda: ['', Validators.required],
       ncdp: ['', Validators.required],
       grossPremium: [{value: '', disabled: true}, Validators.required],
@@ -77,6 +80,22 @@ implements OnInit {
 
     });
 
+  }
+
+  selectType(event: any){
+    this.resetPrincipal();
+    if(event.target.value == ""){
+      this.selectedType = false;
+    }
+    else{
+      this.tempprincipaldisplay = [];
+      this.tempprincipal.forEach(element => {
+        if(element.name.toLowerCase().includes(event.target.value.toLowerCase())){
+          this.tempprincipaldisplay.push(element);
+        }
+      });
+      this.selectedType = true;
+    }
   }
 
   containsObject(obj: PrincipalDto, list: CustomerPrincipalDto[]){
@@ -113,6 +132,13 @@ implements OnInit {
     let toggle = event.target.checked;
     this.tempaddonChecked[index].checked = toggle;
     ((this.principalForm.get('addOns') as FormArray).at(index) as FormGroup).get('checked').patchValue(toggle);
+  }
+
+  resetPrincipal(){
+    this.tempaddonChecked = [];
+    this.principalForm.controls.description.setValue("");
+    this.principalForm.controls.name.setValue("0");
+    this.principalForm.controls.imagelink.setValue("");
   }
 
   selectedPrincipal(event: any){

@@ -24,6 +24,7 @@ implements OnInit {
 
   public emailForm : FormGroup;
   id: number;
+  reminder: boolean;
   showDetails = false;
 
   tempEmailContent: EmailContentDto;
@@ -34,24 +35,36 @@ implements OnInit {
     this._packageService.getEmailItems(this.id)
       .subscribe((result: EmailContentDto) => {
         this.tempEmailContent = result;
+        let subject = result.subject;
+        if(this.reminder){
+          subject = "Carly Insurance Quotation Reminder (" + result.vehicleRegistrationNumber.toUpperCase() + ")";
+        }
         this.emailForm = this._fb.group({
           emailto: [result.emailTo],
-          subject: [result.subject],
+          subject: [subject],
           ownername: [result.vehicleOwnerName],
           regno: [result.vehicleRegistrationNumber],
           coverageperiod: [result.coveragePeriod],
         });
-
+        this.tempEmailContent.subject = subject;
         this.showDetails = true;
       });
   }
 
   email(){
-    this._userService.sendEmail(this.tempEmailContent)
+    if(!this.reminder){
+      this._userService.sendEmail(this.tempEmailContent)
       .subscribe(() => {
         this.notify.info(this.l('EmailedSuccesfully'));
         this.bsModalRef.hide();
-      })
+      });
+    }else{
+      this._userService.sendEmailReminder(this.tempEmailContent)
+      .subscribe(() => {
+        this.notify.info(this.l('EmailedSuccesfully'));
+        this.bsModalRef.hide();
+      });
+    }
   }
 
 }
