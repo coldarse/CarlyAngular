@@ -55,6 +55,10 @@
                     <th>{{ "TransactionDateTime" | localize }}</th>
                     <th>{{ "InvoiceNumber" | localize }}</th>
                     <th>{{ "Voucher" | localize }}</th>
+                    <th>{{ "TransactionId" | localize }}</th>
+                    <th>{{ "PaymentStatus" | localize }}</th>
+                    <th>{{ "CCName" | localize }}</th>
+                    <th>{{ "CCNo" | localize }}</th>
 
                   </tr>
                 </thead>
@@ -76,6 +80,10 @@
                     <td>{{ sale.TransactionDate | date:'medium' }}</td>
                     <td>{{ sale.Invoice}}</td>
                     <td>{{ sale.ClaimedVoucher }}</td>
+                    <td>{{ sale.TransactionId }}</td>
+                    <td>{{ sale.Status }}</td>
+                    <td>{{ sale.CCName }}</td>
+                    <td>{{ sale.CCNo }}</td>
 
                   </tr>
                 </tbody>

@@ -1504,6 +1504,357 @@ export class GeneratedVoucherServiceProxy {
 }
 
 @Injectable()
+export class IPay88ServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAlliPay88(): Observable<IPay88[]> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/GetAlliPay88";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAlliPay88(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAlliPay88(<any>response_);
+                } catch (e) {
+                    return <Observable<IPay88[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IPay88[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAlliPay88(response: HttpResponseBase): Observable<IPay88[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(IPay88.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IPay88[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<IPay88Dto> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<IPay88Dto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IPay88Dto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<IPay88Dto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IPay88Dto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IPay88Dto>(<any>null);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<IPay88DtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/GetAll?";
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<IPay88DtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IPay88DtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<IPay88DtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IPay88DtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IPay88DtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: IPay88Dto | undefined): Observable<IPay88Dto> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<IPay88Dto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IPay88Dto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<IPay88Dto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IPay88Dto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IPay88Dto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: IPay88Dto | undefined): Observable<IPay88Dto> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<IPay88Dto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<IPay88Dto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<IPay88Dto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = IPay88Dto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<IPay88Dto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/iPay88/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class LogoLinkServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2378,6 +2729,302 @@ export class PackageServiceProxy {
      */
     delete(id: number | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Package/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class PaymentServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<PaymentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Payment/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PaymentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaymentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<PaymentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaymentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaymentDto>(<any>null);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PaymentDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Payment/GetAll?";
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PaymentDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaymentDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PaymentDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaymentDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaymentDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: PaymentDto | undefined): Observable<PaymentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Payment/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<PaymentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaymentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<PaymentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaymentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaymentDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: PaymentDto | undefined): Observable<PaymentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Payment/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<PaymentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaymentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<PaymentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaymentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaymentDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Payment/Delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -4124,6 +4771,165 @@ export class TokenAuthServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param paymentRequest (optional) 
+     * @return Success
+     */
+    insertPaymentRequest(paymentRequest: string | null | undefined): Observable<Payment> {
+        let url_ = this.baseUrl + "/api/TokenAuth/InsertPaymentRequest?";
+        if (paymentRequest !== undefined)
+            url_ += "PaymentRequest=" + encodeURIComponent("" + paymentRequest) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertPaymentRequest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertPaymentRequest(<any>response_);
+                } catch (e) {
+                    return <Observable<Payment>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Payment>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertPaymentRequest(response: HttpResponseBase): Observable<Payment> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Payment.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Payment>(<any>null);
+    }
+
+    /**
+     * @param merchantCode (optional) 
+     * @param paymentId (optional) 
+     * @param refNo (optional) 
+     * @param amount (optional) 
+     * @param currency (optional) 
+     * @param remark (optional) 
+     * @param transId (optional) 
+     * @param authCode (optional) 
+     * @param status (optional) 
+     * @param errDesc (optional) 
+     * @param signature (optional) 
+     * @param cCName (optional) 
+     * @param cCNo (optional) 
+     * @param s_bankname (optional) 
+     * @param s_country (optional) 
+     * @param id (optional) 
+     * @return Success
+     */
+    insertiPay88Response(merchantCode: string | null | undefined, paymentId: number | undefined, refNo: string | null | undefined, amount: number | undefined, currency: string | null | undefined, remark: string | null | undefined, transId: string | null | undefined, authCode: string | null | undefined, status: string | null | undefined, errDesc: string | null | undefined, signature: string | null | undefined, cCName: string | null | undefined, cCNo: string | null | undefined, s_bankname: string | null | undefined, s_country: string | null | undefined, id: number | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/TokenAuth/InsertiPay88Response?";
+        if (merchantCode !== undefined)
+            url_ += "MerchantCode=" + encodeURIComponent("" + merchantCode) + "&";
+        if (paymentId === null)
+            throw new Error("The parameter 'paymentId' cannot be null.");
+        else if (paymentId !== undefined)
+            url_ += "PaymentId=" + encodeURIComponent("" + paymentId) + "&";
+        if (refNo !== undefined)
+            url_ += "RefNo=" + encodeURIComponent("" + refNo) + "&";
+        if (amount === null)
+            throw new Error("The parameter 'amount' cannot be null.");
+        else if (amount !== undefined)
+            url_ += "Amount=" + encodeURIComponent("" + amount) + "&";
+        if (currency !== undefined)
+            url_ += "Currency=" + encodeURIComponent("" + currency) + "&";
+        if (remark !== undefined)
+            url_ += "Remark=" + encodeURIComponent("" + remark) + "&";
+        if (transId !== undefined)
+            url_ += "TransId=" + encodeURIComponent("" + transId) + "&";
+        if (authCode !== undefined)
+            url_ += "AuthCode=" + encodeURIComponent("" + authCode) + "&";
+        if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (errDesc !== undefined)
+            url_ += "ErrDesc=" + encodeURIComponent("" + errDesc) + "&";
+        if (signature !== undefined)
+            url_ += "Signature=" + encodeURIComponent("" + signature) + "&";
+        if (cCName !== undefined)
+            url_ += "CCName=" + encodeURIComponent("" + cCName) + "&";
+        if (cCNo !== undefined)
+            url_ += "CCNo=" + encodeURIComponent("" + cCNo) + "&";
+        if (s_bankname !== undefined)
+            url_ += "S_bankname=" + encodeURIComponent("" + s_bankname) + "&";
+        if (s_country !== undefined)
+            url_ += "S_country=" + encodeURIComponent("" + s_country) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processInsertiPay88Response(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processInsertiPay88Response(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processInsertiPay88Response(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
     }
 
     /**
@@ -6900,6 +7706,267 @@ export interface IGeneratedVoucherDtoPagedResultDto {
     items: GeneratedVoucherDto[] | undefined;
 }
 
+export class IPay88 implements IIPay88 {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    remark: string | undefined;
+    transId: string | undefined;
+    authCode: string | undefined;
+    status: string | undefined;
+    errDesc: string | undefined;
+    signature: string | undefined;
+    ccName: string | undefined;
+    ccNo: string | undefined;
+    s_bankname: string | undefined;
+    s_country: string | undefined;
+    id: number;
+
+    constructor(data?: IIPay88) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.merchantCode = _data["merchantCode"];
+            this.paymentId = _data["paymentId"];
+            this.refNo = _data["refNo"];
+            this.amount = _data["amount"];
+            this.currency = _data["currency"];
+            this.remark = _data["remark"];
+            this.transId = _data["transId"];
+            this.authCode = _data["authCode"];
+            this.status = _data["status"];
+            this.errDesc = _data["errDesc"];
+            this.signature = _data["signature"];
+            this.ccName = _data["ccName"];
+            this.ccNo = _data["ccNo"];
+            this.s_bankname = _data["s_bankname"];
+            this.s_country = _data["s_country"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): IPay88 {
+        data = typeof data === 'object' ? data : {};
+        let result = new IPay88();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["merchantCode"] = this.merchantCode;
+        data["paymentId"] = this.paymentId;
+        data["refNo"] = this.refNo;
+        data["amount"] = this.amount;
+        data["currency"] = this.currency;
+        data["remark"] = this.remark;
+        data["transId"] = this.transId;
+        data["authCode"] = this.authCode;
+        data["status"] = this.status;
+        data["errDesc"] = this.errDesc;
+        data["signature"] = this.signature;
+        data["ccName"] = this.ccName;
+        data["ccNo"] = this.ccNo;
+        data["s_bankname"] = this.s_bankname;
+        data["s_country"] = this.s_country;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): IPay88 {
+        const json = this.toJSON();
+        let result = new IPay88();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIPay88 {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    remark: string | undefined;
+    transId: string | undefined;
+    authCode: string | undefined;
+    status: string | undefined;
+    errDesc: string | undefined;
+    signature: string | undefined;
+    ccName: string | undefined;
+    ccNo: string | undefined;
+    s_bankname: string | undefined;
+    s_country: string | undefined;
+    id: number;
+}
+
+export class IPay88Dto implements IIPay88Dto {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    remark: string | undefined;
+    transId: string | undefined;
+    authCode: string | undefined;
+    status: string | undefined;
+    errDesc: string | undefined;
+    signature: string | undefined;
+    ccName: string | undefined;
+    ccNo: string | undefined;
+    s_bankname: string | undefined;
+    s_country: string | undefined;
+    id: number;
+
+    constructor(data?: IIPay88Dto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.merchantCode = _data["merchantCode"];
+            this.paymentId = _data["paymentId"];
+            this.refNo = _data["refNo"];
+            this.amount = _data["amount"];
+            this.currency = _data["currency"];
+            this.remark = _data["remark"];
+            this.transId = _data["transId"];
+            this.authCode = _data["authCode"];
+            this.status = _data["status"];
+            this.errDesc = _data["errDesc"];
+            this.signature = _data["signature"];
+            this.ccName = _data["ccName"];
+            this.ccNo = _data["ccNo"];
+            this.s_bankname = _data["s_bankname"];
+            this.s_country = _data["s_country"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): IPay88Dto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IPay88Dto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["merchantCode"] = this.merchantCode;
+        data["paymentId"] = this.paymentId;
+        data["refNo"] = this.refNo;
+        data["amount"] = this.amount;
+        data["currency"] = this.currency;
+        data["remark"] = this.remark;
+        data["transId"] = this.transId;
+        data["authCode"] = this.authCode;
+        data["status"] = this.status;
+        data["errDesc"] = this.errDesc;
+        data["signature"] = this.signature;
+        data["ccName"] = this.ccName;
+        data["ccNo"] = this.ccNo;
+        data["s_bankname"] = this.s_bankname;
+        data["s_country"] = this.s_country;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): IPay88Dto {
+        const json = this.toJSON();
+        let result = new IPay88Dto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIPay88Dto {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    remark: string | undefined;
+    transId: string | undefined;
+    authCode: string | undefined;
+    status: string | undefined;
+    errDesc: string | undefined;
+    signature: string | undefined;
+    ccName: string | undefined;
+    ccNo: string | undefined;
+    s_bankname: string | undefined;
+    s_country: string | undefined;
+    id: number;
+}
+
+export class IPay88DtoPagedResultDto implements IIPay88DtoPagedResultDto {
+    totalCount: number;
+    items: IPay88Dto[] | undefined;
+
+    constructor(data?: IIPay88DtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(IPay88Dto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): IPay88DtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IPay88DtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): IPay88DtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new IPay88DtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIPay88DtoPagedResultDto {
+    totalCount: number;
+    items: IPay88Dto[] | undefined;
+}
+
 export class LogoLink implements ILogoLink {
     link: string | undefined;
     id: number;
@@ -7391,6 +8458,168 @@ export class PackageDtoPagedResultDto implements IPackageDtoPagedResultDto {
 export interface IPackageDtoPagedResultDto {
     totalCount: number;
     items: PackageDto[] | undefined;
+}
+
+export class PaymentDto implements IPaymentDto {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    prodDesc: string | undefined;
+    userName: string | undefined;
+    userEmail: string | undefined;
+    userContact: string | undefined;
+    remark: string | undefined;
+    lang: string | undefined;
+    singatureType: string | undefined;
+    signature: string | undefined;
+    responseURL: string | undefined;
+    backendURL: string | undefined;
+    status: string | undefined;
+    id: number;
+
+    constructor(data?: IPaymentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.merchantCode = _data["merchantCode"];
+            this.paymentId = _data["paymentId"];
+            this.refNo = _data["refNo"];
+            this.amount = _data["amount"];
+            this.currency = _data["currency"];
+            this.prodDesc = _data["prodDesc"];
+            this.userName = _data["userName"];
+            this.userEmail = _data["userEmail"];
+            this.userContact = _data["userContact"];
+            this.remark = _data["remark"];
+            this.lang = _data["lang"];
+            this.singatureType = _data["singatureType"];
+            this.signature = _data["signature"];
+            this.responseURL = _data["responseURL"];
+            this.backendURL = _data["backendURL"];
+            this.status = _data["status"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PaymentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaymentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["merchantCode"] = this.merchantCode;
+        data["paymentId"] = this.paymentId;
+        data["refNo"] = this.refNo;
+        data["amount"] = this.amount;
+        data["currency"] = this.currency;
+        data["prodDesc"] = this.prodDesc;
+        data["userName"] = this.userName;
+        data["userEmail"] = this.userEmail;
+        data["userContact"] = this.userContact;
+        data["remark"] = this.remark;
+        data["lang"] = this.lang;
+        data["singatureType"] = this.singatureType;
+        data["signature"] = this.signature;
+        data["responseURL"] = this.responseURL;
+        data["backendURL"] = this.backendURL;
+        data["status"] = this.status;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PaymentDto {
+        const json = this.toJSON();
+        let result = new PaymentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPaymentDto {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    prodDesc: string | undefined;
+    userName: string | undefined;
+    userEmail: string | undefined;
+    userContact: string | undefined;
+    remark: string | undefined;
+    lang: string | undefined;
+    singatureType: string | undefined;
+    signature: string | undefined;
+    responseURL: string | undefined;
+    backendURL: string | undefined;
+    status: string | undefined;
+    id: number;
+}
+
+export class PaymentDtoPagedResultDto implements IPaymentDtoPagedResultDto {
+    totalCount: number;
+    items: PaymentDto[] | undefined;
+
+    constructor(data?: IPaymentDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PaymentDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PaymentDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaymentDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PaymentDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new PaymentDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPaymentDtoPagedResultDto {
+    totalCount: number;
+    items: PaymentDto[] | undefined;
 }
 
 export class AddOn implements IAddOn {
@@ -8851,6 +10080,113 @@ export class TenantDtoPagedResultDto implements ITenantDtoPagedResultDto {
 export interface ITenantDtoPagedResultDto {
     totalCount: number;
     items: TenantDto[] | undefined;
+}
+
+export class Payment implements IPayment {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    prodDesc: string | undefined;
+    userName: string | undefined;
+    userEmail: string | undefined;
+    userContact: string | undefined;
+    remark: string | undefined;
+    lang: string | undefined;
+    singatureType: string | undefined;
+    signature: string | undefined;
+    responseURL: string | undefined;
+    backendURL: string | undefined;
+    status: string | undefined;
+    id: number;
+
+    constructor(data?: IPayment) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.merchantCode = _data["merchantCode"];
+            this.paymentId = _data["paymentId"];
+            this.refNo = _data["refNo"];
+            this.amount = _data["amount"];
+            this.currency = _data["currency"];
+            this.prodDesc = _data["prodDesc"];
+            this.userName = _data["userName"];
+            this.userEmail = _data["userEmail"];
+            this.userContact = _data["userContact"];
+            this.remark = _data["remark"];
+            this.lang = _data["lang"];
+            this.singatureType = _data["singatureType"];
+            this.signature = _data["signature"];
+            this.responseURL = _data["responseURL"];
+            this.backendURL = _data["backendURL"];
+            this.status = _data["status"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Payment {
+        data = typeof data === 'object' ? data : {};
+        let result = new Payment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["merchantCode"] = this.merchantCode;
+        data["paymentId"] = this.paymentId;
+        data["refNo"] = this.refNo;
+        data["amount"] = this.amount;
+        data["currency"] = this.currency;
+        data["prodDesc"] = this.prodDesc;
+        data["userName"] = this.userName;
+        data["userEmail"] = this.userEmail;
+        data["userContact"] = this.userContact;
+        data["remark"] = this.remark;
+        data["lang"] = this.lang;
+        data["singatureType"] = this.singatureType;
+        data["signature"] = this.signature;
+        data["responseURL"] = this.responseURL;
+        data["backendURL"] = this.backendURL;
+        data["status"] = this.status;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Payment {
+        const json = this.toJSON();
+        let result = new Payment();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPayment {
+    merchantCode: string | undefined;
+    paymentId: number;
+    refNo: string | undefined;
+    amount: number;
+    currency: string | undefined;
+    prodDesc: string | undefined;
+    userName: string | undefined;
+    userEmail: string | undefined;
+    userContact: string | undefined;
+    remark: string | undefined;
+    lang: string | undefined;
+    singatureType: string | undefined;
+    signature: string | undefined;
+    responseURL: string | undefined;
+    backendURL: string | undefined;
+    status: string | undefined;
+    id: number;
 }
 
 export class IsValidDto implements IIsValidDto {
