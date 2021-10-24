@@ -55,9 +55,12 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                   this.sales.forEach((elem: SaleDto) => {
                     this.packages.forEach((element: PackageDto) => {
                       if(elem.package == element.id){
-                        let refNo = 'INV' + element.id.toString().padStart(5, '0');
+                        //let refNo = 'INV' + element.id.toString().padStart(5, '0');
+                        let refNo = elem.referenceNo;
+                        let isMatch = false;
                         this.iPay88s.forEach((ielem: IPay88Dto) => {
-                          if(ielem.refNo == refNo){
+                          if(ielem.refNo == refNo && ielem.status == "1"){
+                            isMatch = true;
                             let tempprincipal = "";
                             element.principals.forEach((x: CustomerPrincipalDto) => {
                               if(x.id == elem.selectedPrincipal){
@@ -88,14 +91,53 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
                               'Policy': element.coveragePeriod,
                               'Invoice': ielem.refNo,
                               'TransactionId': ielem.transId,
-                              'Status': ielem.status == "1"? 'Paid' : 'Failed',
+                              'Status': ielem.status == "1"? 'Success' : 'Failed',
                               'CCName': ielem.ccName,
                               'CCNo': ielem.ccNo,
                             });
 
                             this.backupSalesTable = this.salesTable;
                           }
-                        })
+                        });
+
+                        if(isMatch == false){
+                          let tempprincipal = "";
+                          element.principals.forEach((x: CustomerPrincipalDto) => {
+                            if(x.id == elem.selectedPrincipal){
+                              tempprincipal = x.name;
+                            }
+                          })
+
+                          let tempAddress =
+                            elem.address1 + ", " +
+                            elem.address2 + ", " +
+                            elem.postcode + ", " +
+                            elem.city + ", " +
+                            elem.state
+
+                          this.salesTable.push({
+                            'Id': element.id,
+                            'Name': element.ownerName,
+                            'NRIC': element.ownerNRIC,
+                            'VehicleReg': element.vehicleRegNo,
+                            'Email': element.ownerEmail,
+                            'Phone': element.ownerPhoneNo,
+                            'Address': tempAddress,
+                            'Principal': tempprincipal,
+                            'AddOns': elem.selectedAddOns,
+                            'Premium': elem.premium,
+                            'TransactionDate': elem.transactionDateTime,
+                            'ClaimedVoucher': elem.claimedVoucher,
+                            'Policy': element.coveragePeriod,
+                            'Invoice': "INV" + element.id.toString().padStart(5, '0'),
+                            'TransactionId': "",
+                            'Status': "Success",
+                            'CCName': "",
+                            'CCNo': "",
+                          });
+
+                          this.backupSalesTable = this.salesTable;
+                        }
                       }
                     });
                   });
@@ -111,6 +153,8 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
   protected delete(entity: SaleDto): void {
     throw new Error('Method not implemented.');
   }
+
+
 
   search(){
     if(this.keyword != ""){

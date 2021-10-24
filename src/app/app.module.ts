@@ -58,6 +58,7 @@ import { GenerateLinkDialogComponent } from './package/generate-link-dialog/gene
 import { GenerateEmailDialogComponent } from './package/generate-email-dialog/generate-email-dialog.component'
 import { ClipboardModule } from 'ngx-clipboard';
 import { SaleComponent } from './sale/sale.component';
+import { PaymentGatewayTransactionsComponent } from './payment-gateway-transactions/payment-gateway-transactions.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { SaleComponent } from './sale/sale.component';
     GeneratedVoucherComponent,
     GenerateLinkDialogComponent,
     GenerateEmailDialogComponent,
-    SaleComponent
+    SaleComponent,
+    PaymentGatewayTransactionsComponent
   ],
   imports: [
     CommonModule,

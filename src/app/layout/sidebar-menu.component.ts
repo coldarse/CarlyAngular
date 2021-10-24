@@ -45,8 +45,8 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         return [
             // new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
             // new MenuItem(
-            //     this.l('HomePage'), 
-            //     '/app/home', 
+            //     this.l('HomePage'),
+            //     '/app/home',
             //     'fas fa-home'
             // ),
             new MenuItem(
@@ -96,6 +96,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 '/app/sales',
                 'fas fa-store',
                 'Pages.Sales'
+            ),
+            new MenuItem(
+                this.l('PaymentGatewayTransactions'),
+                '/app/paymentGateway',
+                'fas fa-cash-register',
+                'Pages.PaymentGateWay'
             ),
         ];
     }

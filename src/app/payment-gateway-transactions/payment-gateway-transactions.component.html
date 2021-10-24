@@ -1,0 +1,194 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-6">&emsp;</div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button
+                                type="button"
+                                class="btn bg-blue"
+                                (click)="getDataPage(1)"
+                        >
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="keyword"
+                            [placeholder]="'ReferenceNo' | localize"
+                            [(ngModel)]="keyword"
+                            (keyup.enter)="getDataPage(1)"
+                    />
+                    <div class="input-group-append">
+                      <button
+                              type="button"
+                              class="btn btn-default"
+                              (click)="advancedFiltersVisible = !advancedFiltersVisible"
+                      >
+                          <i
+                                  class="fas"
+                                  [class.fa-angle-up]="advancedFiltersVisible"
+                                  [class.fa-angle-down]="!advancedFiltersVisible"
+                          ></i>
+                      </button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+          <div class="card-body">
+              <form class="form-horizontal">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group row mb-0">
+                              <label class="col-md-3 col-form-label">
+                                  {{ "IsRedeemed" | localize }}
+                              </label>
+                              <div class="col-md-9 pt-2">
+                                  <div class="custom-control custom-radio d-inline">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedAll"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="undefined"
+                                              checked
+                                      />
+                                      <label class="custom-control-label" for="isRedeemedAll">
+                                          {{ "All" | localize }}
+                                      </label>
+                                  </div>
+                                  <div class="custom-control custom-radio d-inline mx-3">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedActive"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="true"
+                                      />
+                                      <label
+                                              class="custom-control-label"
+                                              for="isRedeemedActive"
+                                      >
+                                          {{ "Yes" | localize }}
+                                      </label>
+                                  </div>
+                                  <div class="custom-control custom-radio d-inline">
+                                      <input
+                                              type="radio"
+                                              class="custom-control-input"
+                                              id="isRedeemedPassive"
+                                              name="isRedeemed"
+                                              [(ngModel)]="isRedeemed"
+                                              [value]="false"
+                                      />
+                                      <label
+                                              class="custom-control-label"
+                                              for="isRedeemedPassive"
+                                      >
+                                          {{ "No" | localize }}
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="card-footer">
+              <button
+                      type="button"
+                      class="btn bg-blue"
+                      (click)="getDataPage(1)"
+              >
+                  {{ "Search" | localize }}
+              </button>
+              <button
+                      type="button"
+                      class="btn btn-default float-right"
+                      (click)="clearFilters()"
+              >
+                  {{ "Clear" | localize }}
+              </button>
+          </div>
+      </div> -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6">
+            <h1>{{ "iPay88" | localize }}</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered"
+                [busy]="isTableLoading">
+                <thead class="bg-light">
+                  <tr>
+                    <th>{{ "Payment" | localize }}</th>
+                    <th>{{ "ReferenceNo" | localize }}</th>
+                    <th>{{ "Amount" | localize }}</th>
+                    <th>{{ "Currency" | localize }}</th>
+                    <th>{{ "Status" | localize }}</th>
+                    <th>{{ "TransactionID" | localize }}</th>
+                    <th>{{ "Error" | localize }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="
+                    let ipay of iPay88
+                      | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: pageSize,
+                            currentPage: pageNumber,
+                            totalItems: totalItems
+                          }
+                  ">
+                    <td>{{ ipay.paymentId }}</td>
+                    <td>{{ ipay.refNo }}</td>
+                    <td>{{ ipay.amount | number : '1.2-2' }}</td>
+                    <td>{{ ipay.currency }}</td>
+                    <td>{{ ipay.status == "1"? "Success" : "Failed" }}</td>
+                    <td>{{ ipay.transId }}</td>
+                    <td>{{ ipay.errDesc }}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer table-card-footer bg-light border-top">
+            <div class="row">
+              <div class="col-sm-4 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary"
+                  (click)="refresh()">
+                  <i class="fas fa-redo-alt"></i>
+                </button>
+              </div>
+              <div class="col-sm-4 col-12 text-center">
+                <p class="mb-0 my-2">
+                  {{ "TotalRecordsCount" | localize: totalItems }}
+                </p>
+              </div>
+              <div class="col-sm-4 col-12">
+                <div class="float-sm-right m-auto">
+                  <abp-pagination-controls id="server"
+                    (pageChange)="getDataPage($event)">
+                  </abp-pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

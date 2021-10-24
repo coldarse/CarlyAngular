@@ -13,6 +13,7 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { PackageComponent } from './package/package.component';
 import { GeneratedVoucherComponent } from './generated-voucher/generated-voucher.component';
 import { SaleComponent } from './sale/sale.component';
+import { PaymentGatewayTransactionsComponent } from './payment-gateway-transactions/payment-gateway-transactions.component';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { SaleComponent } from './sale/sale.component';
                     { path: 'package', component: PackageComponent, data: { permission: 'Pages.Packages' }, canActivate: [AppRouteGuard] },
                     { path: 'generatedVouchers', component: GeneratedVoucherComponent, data: { permission: 'Pages.GeneratedVouchers' }, canActivate: [AppRouteGuard] },
                     { path: 'sales', component: SaleComponent, data: { permission: 'Pages.Sales' }, canActivate: [AppRouteGuard] },
+                    { path: 'paymentGateway', component: PaymentGatewayTransactionsComponent, data: { permission: 'Pages.Sales' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]
             }

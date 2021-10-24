@@ -49,6 +49,7 @@
                 [busy]="isTableLoading">
                 <thead class="bg-light">
                   <tr>
+                    <th>{{ "ID" | localize }}</th>
                     <th>{{ "Name" | localize }}</th>
                     <th>{{ "NRIC" | localize }}</th>
                     <th>{{ "VehicleRegNo" | localize }}</th>
@@ -68,6 +69,7 @@
                             totalItems: totalItems
                           }
                   ">
+                  <td>{{ package.id }}</td>
                   <td>{{ package.ownerName }}</td>
                   <td>{{ package.ownerNRIC }}</td>
                   <td>{{ package.vehicleRegNo }}</td>

@@ -1626,15 +1626,15 @@ export class IPay88ServiceProxy {
     }
 
     /**
-     * @param sorting (optional) 
+     * @param keyword (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<IPay88DtoPagedResultDto> {
+    getAll(keyword: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<IPay88DtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/iPay88/GetAll?";
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -5202,6 +5202,107 @@ export class TokenAuthServiceProxy {
             }));
         }
         return _observableOf<number>(<any>null);
+    }
+
+    /**
+     * @param merchantCode (optional) 
+     * @param paymentId (optional) 
+     * @param refNo (optional) 
+     * @param amount (optional) 
+     * @param currency (optional) 
+     * @param remark (optional) 
+     * @param transId (optional) 
+     * @param authCode (optional) 
+     * @param status (optional) 
+     * @param errDesc (optional) 
+     * @param signature (optional) 
+     * @param cCName (optional) 
+     * @param cCNo (optional) 
+     * @param s_bankname (optional) 
+     * @param s_country (optional) 
+     * @param id (optional) 
+     * @return Success
+     */
+    iPay88Redirect(merchantCode: string | null | undefined, paymentId: number | undefined, refNo: string | null | undefined, amount: number | undefined, currency: string | null | undefined, remark: string | null | undefined, transId: string | null | undefined, authCode: string | null | undefined, status: string | null | undefined, errDesc: string | null | undefined, signature: string | null | undefined, cCName: string | null | undefined, cCNo: string | null | undefined, s_bankname: string | null | undefined, s_country: string | null | undefined, id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/TokenAuth/iPay88Redirect?";
+        if (merchantCode !== undefined)
+            url_ += "MerchantCode=" + encodeURIComponent("" + merchantCode) + "&";
+        if (paymentId === null)
+            throw new Error("The parameter 'paymentId' cannot be null.");
+        else if (paymentId !== undefined)
+            url_ += "PaymentId=" + encodeURIComponent("" + paymentId) + "&";
+        if (refNo !== undefined)
+            url_ += "RefNo=" + encodeURIComponent("" + refNo) + "&";
+        if (amount === null)
+            throw new Error("The parameter 'amount' cannot be null.");
+        else if (amount !== undefined)
+            url_ += "Amount=" + encodeURIComponent("" + amount) + "&";
+        if (currency !== undefined)
+            url_ += "Currency=" + encodeURIComponent("" + currency) + "&";
+        if (remark !== undefined)
+            url_ += "Remark=" + encodeURIComponent("" + remark) + "&";
+        if (transId !== undefined)
+            url_ += "TransId=" + encodeURIComponent("" + transId) + "&";
+        if (authCode !== undefined)
+            url_ += "AuthCode=" + encodeURIComponent("" + authCode) + "&";
+        if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (errDesc !== undefined)
+            url_ += "ErrDesc=" + encodeURIComponent("" + errDesc) + "&";
+        if (signature !== undefined)
+            url_ += "Signature=" + encodeURIComponent("" + signature) + "&";
+        if (cCName !== undefined)
+            url_ += "CCName=" + encodeURIComponent("" + cCName) + "&";
+        if (cCNo !== undefined)
+            url_ += "CCNo=" + encodeURIComponent("" + cCNo) + "&";
+        if (s_bankname !== undefined)
+            url_ += "S_bankname=" + encodeURIComponent("" + s_bankname) + "&";
+        if (s_country !== undefined)
+            url_ += "S_country=" + encodeURIComponent("" + s_country) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIPay88Redirect(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIPay88Redirect(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processIPay88Redirect(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -9472,6 +9573,7 @@ export class Sale implements ISale {
     city: string | undefined;
     state: string | undefined;
     claimedVoucher: string | undefined;
+    referenceNo: string | undefined;
     id: number;
 
     constructor(data?: ISale) {
@@ -9496,6 +9598,7 @@ export class Sale implements ISale {
             this.city = _data["city"];
             this.state = _data["state"];
             this.claimedVoucher = _data["claimedVoucher"];
+            this.referenceNo = _data["referenceNo"];
             this.id = _data["id"];
         }
     }
@@ -9520,6 +9623,7 @@ export class Sale implements ISale {
         data["city"] = this.city;
         data["state"] = this.state;
         data["claimedVoucher"] = this.claimedVoucher;
+        data["referenceNo"] = this.referenceNo;
         data["id"] = this.id;
         return data; 
     }
@@ -9544,6 +9648,7 @@ export interface ISale {
     city: string | undefined;
     state: string | undefined;
     claimedVoucher: string | undefined;
+    referenceNo: string | undefined;
     id: number;
 }
 
@@ -9559,6 +9664,7 @@ export class SaleDto implements ISaleDto {
     city: string | undefined;
     state: string | undefined;
     claimedVoucher: string | undefined;
+    referenceNo: string | undefined;
     id: number;
 
     constructor(data?: ISaleDto) {
@@ -9583,6 +9689,7 @@ export class SaleDto implements ISaleDto {
             this.city = _data["city"];
             this.state = _data["state"];
             this.claimedVoucher = _data["claimedVoucher"];
+            this.referenceNo = _data["referenceNo"];
             this.id = _data["id"];
         }
     }
@@ -9607,6 +9714,7 @@ export class SaleDto implements ISaleDto {
         data["city"] = this.city;
         data["state"] = this.state;
         data["claimedVoucher"] = this.claimedVoucher;
+        data["referenceNo"] = this.referenceNo;
         data["id"] = this.id;
         return data; 
     }
@@ -9631,6 +9739,7 @@ export interface ISaleDto {
     city: string | undefined;
     state: string | undefined;
     claimedVoucher: string | undefined;
+    referenceNo: string | undefined;
     id: number;
 }
 
