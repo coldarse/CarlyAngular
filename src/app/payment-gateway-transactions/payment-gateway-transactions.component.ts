@@ -121,7 +121,7 @@ export class PaymentGatewayTransactionsComponent extends PagedListingComponentBa
         element.paymentId = 'China UnionPay Online Banking (MYR)';
       }
       else if(element.paymentId == 2){
-        element.paymentId = 'Creidt Card (MYR)';
+        element.paymentId = 'Credit Card (MYR)';
       }
       else if(element.paymentId == 55){
         element.paymentId = 'Credit Card (MYR) Pre-Auth';

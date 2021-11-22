@@ -177,6 +177,25 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
       this.principalForm.controls.grossPremium.disable();
 
       this.selectedCustomerPrincipal.addOns = [];
+
+
+      const control = <FormArray>this.principalForm.controls['addOns'];
+
+      let indexes = control.length - 1;
+
+      for(let i = indexes; i >= 0; i--){
+        if(control.at(i).value.checked == false){
+          this._customerAddonService.delete(control.at(i).value.id)
+            .subscribe();
+
+          control.removeAt(i)
+        }
+      }
+
+      for(let j = 0; j < control.length; j++){
+        ((this.principalForm.get('addOns') as FormArray).at(j) as FormGroup).removeControl('checked');
+      }
+
       this.principalForm.controls.addOns.value.forEach(element => {
         let addon = new CustomerAddOnDto();
         addon.addonname = element.addonname;
@@ -187,23 +206,6 @@ export class EditPackagePrincipalComponent extends AppComponentBase implements O
 
         this.selectedCustomerPrincipal.addOns.push(addon);
       });
-
-      const control = <FormArray>this.principalForm.controls['addOns'];
-
-
-      let indexes = control.length - 1;
-
-      for(let i = indexes; i >= 0; i--){
-        if(control.at(i).value.checked == false){
-          this._customerAddonService.delete(control.at(i).value.id)
-            .subscribe();
-        }
-      }
-
-      for(let j = 0; j < control.length; j++){
-        ((this.principalForm.get('addOns') as FormArray).at(j) as FormGroup).removeControl('checked');
-      }
-
 
       this._customerPrincipalService
         .update(this.selectedCustomerPrincipal)
