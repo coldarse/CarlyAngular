@@ -1,7 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, Injector, OnInit } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { CustomerPrincipalDto, IPay88Dto, IPay88ServiceProxy, PackageDto, PackageServiceProxy, PrincipalDto, SaleDto, SaleDtoPagedResultDto, SaleServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
+import * as XLSX from 'xlsx';
+
 
 class PagedSalesRequestDto extends PagedRequestDto{
   keyword: string;
@@ -19,6 +22,8 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
   packages: PackageDto[];
   iPay88s: IPay88Dto[];
   advancedFiltersVisible = false;
+
+  fileName= '_Transactions.xlsx';
 
   salesTable: any = [];
   backupSalesTable: any = [];
@@ -154,7 +159,43 @@ export class SaleComponent extends PagedListingComponentBase<SaleDto> {
     throw new Error('Method not implemented.');
   }
 
+  exportexcel(): void
+    {
+       /* table id is passed over here */
+       let element = document.getElementById('excel-table');
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
 
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, formatDate(new Date(), 'dd/MM/yyyy', 'en') + this.fileName);
+
+    }
+
+  filterDate(){
+    let startDate = (<HTMLInputElement>document.getElementById('startDate')).value;
+    let endDate = (<HTMLInputElement>document.getElementById('endDate')).value;
+
+    let date1 = formatDate(startDate, "MM/dd/yyyy", 'en');
+    let date2 = formatDate(endDate, "MM/dd/yyyy", 'en');
+
+    this.salesTable = [];
+
+    this.backupSalesTable.forEach((element: any) => {
+      let date3 = formatDate(element.TransactionDate, "MM/dd/yyyy", 'en');
+
+      if (date3 > date1 && date3 < date2 ){
+        this.salesTable.push(element);
+      }
+
+    });
+
+    if(this.salesTable.length == 0){
+      this.salesTable = this.backupSalesTable;
+    }
+  }
 
   search(){
     if(this.keyword != ""){
